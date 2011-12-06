@@ -31,6 +31,14 @@ FactoryGirl.define do
     clause    { "SUM(#{cube.name}.numeric_col)" }
   end
 
+  factory :relation, :class => "Fiddle::Relation" do
+    operator  "LEFT OUTER JOIN"
+    cube
+    target    "some_table"
+    name      { FactoryGirl.generate(:name_alias) }
+    predicate {|i| "#{i.cube.name}.foreign_id = #{i.name}.id" }
+  end
+
   factory :constraint, :class => "Fiddle::Constraint" do
     operation_code "eq"
     projection
