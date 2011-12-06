@@ -1,0 +1,8 @@
+stats:
+  universe: sqlite
+  name: stats
+  clause: stats
+meta_stats:
+  universe: sqlite
+  name: meta_stats
+  clause: meta_stats

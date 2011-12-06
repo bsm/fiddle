@@ -1,0 +1,15 @@
+website__eq:
+  cube: stats
+  projection: website_name
+  name: website
+  operation_code: eq
+page_views__gt:
+  cube: stats
+  projection: page_views
+  name: page_views
+  operation_code: gt
+date__between:
+  cube: stats
+  projection: date
+  name: date
+  operation_code: between

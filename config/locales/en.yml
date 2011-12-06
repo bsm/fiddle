@@ -1,0 +1,17 @@
+en:
+
+  activerecord:
+    errors:
+      models:
+        fiddle/universe:
+          attributes:
+            uri:
+              not_connected: "cannot be connected. %{reason}"
+        fiddle/dimension:
+          attributes:
+            clause:
+              invalid_reference: "contains missing references: %{missing}"
+        fiddle/constraint:
+          attributes:
+            operation_code:
+              not_applicable: "is not all applicable for this data type"

@@ -1,0 +1,12 @@
+development:
+  adapter: sqlite3
+  encoding: utf8
+  pool: 5
+  database: ":memory:"
+
+test:
+  adapter: sqlite3
+  encoding: utf8
+  pool: 5
+  database: ":memory:"
+

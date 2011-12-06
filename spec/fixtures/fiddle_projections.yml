@@ -1,0 +1,37 @@
+website_id:
+  cube: stats
+  name: website_id
+  type: Fiddle::Dimension
+  clause: "stats.website_id"
+  visible: false
+  type_code: integer
+website_name:
+  cube: stats
+  name: website_name
+  type: Fiddle::Dimension
+  clause: "websites.name"
+  type_code: string
+date:
+  cube: stats
+  name: date
+  type: Fiddle::Dimension
+  clause: "stats.date"
+  type_code: date
+page_views:
+  cube: stats
+  name: page_views
+  type: Fiddle::Measure
+  clause: "SUM(stats.page_views)"
+  type_code: integer
+visits:
+  cube: stats
+  name: visits
+  type: Fiddle::Measure
+  clause: "SUM(stats.visits)"
+  type_code: integer
+ppv:
+  cube: stats
+  name: ppv
+  type: Fiddle::Measure
+  clause: "SUM(stats.page_views) / (SUM(stats.visits) * 1.0)"
+  type_code: numeric

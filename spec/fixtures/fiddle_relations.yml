@@ -1,0 +1,6 @@
+websites:
+  cube: stats
+  name: websites
+  target: dim_websites
+  operator: LEFT OUTER JOIN
+  predicate: websites.id = stats.website_id
