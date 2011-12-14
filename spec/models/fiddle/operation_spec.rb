@@ -46,9 +46,9 @@ describe Fiddle::Operation do
     end
 
     it 'should build SQL args' do
-      build("string", "123").sql_args.should == "123"
-      build("integer", "123").sql_args.should == 123
-      build("date", "2009-09-09").sql_args.should == Date.civil(2009, 9, 9)
+      build("string", "123").sql_args.should == ["123"]
+      build("integer", "123").sql_args.should == [123]
+      build("date", "2009-09-09").sql_args.should == [Date.civil(2009, 9, 9)]
     end
 
     it 'should be valid if SQL args can be built' do
@@ -124,6 +124,11 @@ describe Fiddle::Operation do
     it 'should have an SQL clause' do
       subject.sql_clause.should == "BETWEEN ? AND ?"
     end
+
+    it 'should build SQL placeholder strings' do
+      build("integer", "123..456").where_sql.to_s(fiddle_cubes(:stats).dataset).should == "table.field BETWEEN 123 AND 456"
+    end
+
   end
 
   describe "Gt" do
@@ -183,16 +188,28 @@ describe Fiddle::Operation do
 
     it { should be_a(Fiddle::Operation::Collective) }
 
+    it 'should check validity' do
+      build("integer", []).should_not be_valid
+      build("integer", nil).should_not be_valid
+      build("integer", "").should_not be_valid
+      build("integer", {}).should_not be_valid
+      build("string", "A").should be_valid
+    end
+
     it 'should build SQL args' do
       build("integer", []).sql_args.should == []
       build("integer", nil).sql_args.should == []
+      build("integer", "").sql_args.should == []
       build("integer", {}).sql_args.should == []
-      build("string", "A")
-      build("string", "A").sql_args.should == ["A"]
-      build("string", :A).sql_args.should == ["A"]
-      build("string", [1,2,3]).sql_args.should == ["1", "2", "3"]
-      build("integer", [1,"2|3|4|5|6|  ||",3,4,5]).sql_args.should == (1..6).to_a
-      build("integer", { 1 => 2 }).sql_args.should == [1]
+      build("string", "A").sql_args.should == [["A"]]
+      build("string", :A).sql_args.should == [["A"]]
+      build("string", [1,2,3]).sql_args.should == [["1", "2", "3"]]
+      build("integer", [1,"2|3|4|5|6|  ||",3,4,5]).sql_args.should == [(1..6).to_a]
+      build("integer", { 1 => 2 }).sql_args.should == [[1]]
+    end
+
+    it 'should build SQL placeholder strings' do
+      build("string", "A|B").where_sql.to_s(fiddle_cubes(:stats).dataset).should == "table.field IN ('A', 'B')"
     end
 
   end

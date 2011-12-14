@@ -57,16 +57,14 @@ class Fiddle::Operation
     #   Is the given value valid?
     def valid?
       return false unless type_class.operations.include?(self.class.code)
-
-      args = Array.wrap(sql_args)
-      !args.empty? && args.none?(&:nil?)
+      sql_args.is_a?(Array) && !sql_args.empty? && sql_args.none?(&:nil?)
     end
     memoize :valid?
 
     # @return [Array]
     #   the SQL arguments, or nil if invalid
     def sql_args
-      type_class.new(value.to_s).convert
+      [type_class.new(value.to_s).convert]
     end
     memoize :sql_args
 
@@ -78,7 +76,7 @@ class Fiddle::Operation
 
     # @return [Sequel::SQL::PlaceholderLiteralString]
     def where_sql
-      Sequel::SQL::PlaceholderLiteralString.new "#{projection.clause} #{sql_clause}", [sql_args]
+      Sequel::SQL::PlaceholderLiteralString.new "#{projection.clause} #{sql_clause}", sql_args
     end
 
   end
@@ -88,9 +86,10 @@ class Fiddle::Operation
     include Fiddle::Utils
 
     def sql_args
-      normalize_array(value).map do |token|
+      result = normalize_array(value).map do |token|
         type_class.new(token).convert
       end
+      result.empty? ? [] : [result]
     end
 
   end
