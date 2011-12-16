@@ -33,6 +33,12 @@ class Fiddle::Constraint < Fiddle::Base
     [name, operation_code].join('.')
   end
 
+  # @return [String]
+  #   The description for this constraint. Taken from projection.
+  def description
+    projection.try :description
+  end
+
   private
 
     def ensure_correct_operation_code

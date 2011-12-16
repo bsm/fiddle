@@ -8,6 +8,7 @@ describe Fiddle::Projection do
 
   it { should validate_presence_of(:cube) }
   it { should validate_presence_of(:name) }
+  it { should ensure_length_of(:description).is_at_most(80) }
   it { should ensure_length_of(:name).is_at_most(30) }
   it { should validate_uniqueness_of(:name).case_insensitive.scoped_to(:cube_id) }
   ["example", "an_example", "_example"].each do |value|

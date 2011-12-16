@@ -11,6 +11,7 @@ website_name:
   type: Fiddle::Dimension
   clause: "websites.name"
   type_code: string
+  description: Website Name
 date:
   cube: stats
   name: date

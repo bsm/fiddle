@@ -59,4 +59,8 @@ describe Fiddle::Constraint do
     fiddle_constraints(:website__eq).param_key.should == "website.eq"
   end
 
+  it 'should have a description key' do
+    fiddle_constraints(:website__eq).description.should == "Website Name"
+  end
+
 end

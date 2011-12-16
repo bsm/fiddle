@@ -7,6 +7,7 @@ class Fiddle::Projection < Fiddle::Base
   # ---> VALIDATIONS
   validates_name_alias :scope => :cube_id
   validates :cube, :presence => true
+  validates :description, :length => { :maximum => 80 }
   validates :clause,
     :presence   => true,
     :length     => { :maximum => 255 }
