@@ -1,10 +1,10 @@
 PATH
   remote: .
   specs:
-    fiddle (0.3.0)
-      activerecord (~> 3.1.0)
+    fiddle (0.3.1)
+      activerecord (>= 3.1.0, < 3.3.0)
       inherited_resources
-      railties (~> 3.1.0)
+      railties (>= 3.1.0, < 3.3.0)
       sequel
 
 GEM
@@ -44,11 +44,10 @@ GEM
     inherited_resources (1.3.0)
       has_scope (~> 0.5.0)
       responders (~> 0.6.0)
-    json (1.6.3)
+    json (1.6.4)
     multi_json (1.0.4)
-    pg (0.12.0)
-      rake-compiler (~> 0.7)
-    rack (1.3.5)
+    pg (0.12.2)
+    rack (1.3.6)
     rack-cache (1.1)
       rack (>= 0.4)
     rack-mount (0.8.3)
@@ -65,8 +64,6 @@ GEM
       rdoc (~> 3.4)
       thor (~> 0.14.6)
     rake (0.9.2.2)
-    rake-compiler (0.7.9)
-      rake
     rdoc (3.12)
       json (~> 1.4)
     responders (0.6.4)
@@ -83,7 +80,7 @@ GEM
       activesupport (~> 3.0)
       railties (~> 3.0)
       rspec (~> 2.7.0)
-    sequel (3.30.0)
+    sequel (3.31.0)
     shoulda-matchers (1.0.0)
     sprockets (2.0.3)
       hike (~> 1.2)
