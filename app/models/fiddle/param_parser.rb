@@ -1,5 +1,4 @@
 class Fiddle::ParamParser
-  extend ActiveSupport::Memoizable
   include Fiddle::Utils
 
   attr_reader :parent, :measures, :dimensions, :operations, :orders, :offset, :limit

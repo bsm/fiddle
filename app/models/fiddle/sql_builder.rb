@@ -1,5 +1,4 @@
 class Fiddle::SQLBuilder
-  extend ActiveSupport::Memoizable
 
   attr_reader :cube, :select, :group, :where, :having, :order, :join, :limit, :offset
 
@@ -27,24 +26,8 @@ class Fiddle::SQLBuilder
   end
 
   def dataset
-    result = cube.dataset.
-      select(*literalize(select.map(&:select_sql))).
-      from(lit(cube.from_sql)).
-      group(*literalize(group.map(&:group_sql))).
-      order(*literalize(order.map(&:to_s))).
-      clone :join => literalize(join.map(&:join_sql), " ")
-
-    where.each do |op|
-      result = result.where(op.where_sql)
-    end
-
-    having.each do |op|
-      result = result.having(op.where_sql)
-    end
-
-    result.limit(limit, offset)
+    @dataset ||= construct_scope
   end
-  memoize :dataset
 
   def to_s
     dataset.sql
@@ -54,6 +37,25 @@ class Fiddle::SQLBuilder
 
     def build(*args)
       @dataset = dataset.send(*args)
+    end
+
+    def construct_scope
+      result = cube.dataset.
+        select(*literalize(select.map(&:select_sql))).
+        from(lit(cube.from_sql)).
+        group(*literalize(group.map(&:group_sql))).
+        order(*literalize(order.map(&:to_s))).
+        clone :join => literalize(join.map(&:join_sql), " ")
+
+      where.each do |op|
+        result = result.where(op.where_sql)
+      end
+
+      having.each do |op|
+        result = result.having(op.where_sql)
+      end
+
+      result.limit(limit, offset)
     end
 
     def normalize_opts!(opts)

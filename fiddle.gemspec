@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.name        = "fiddle"
   s.summary     = "Fiddle"
   s.description = "Rails Engine for constructing universes"
-  s.version     = "0.3.0"
+  s.version     = "0.3.1"
 
   s.authors     = ["Dimitrij Denissenko"]
   s.email       = "dimitrij@blacksquaremedia.com"
@@ -16,8 +16,8 @@ Gem::Specification.new do |s|
   s.files       = Dir["{app,lib,config}/**/*"]
   s.test_files  = Dir["{spec}/**/*", "Rakefile", "Gemfile*"]
 
-  s.add_dependency "railties", "~> 3.1.0"
-  s.add_dependency "activerecord", "~> 3.1.0"
+  s.add_dependency "railties", ">= 3.1.0", "< 3.3.0"
+  s.add_dependency "activerecord", ">= 3.1.0", "< 3.3.0"
   s.add_dependency "sequel"
   s.add_dependency "inherited_resources"
 

@@ -8,7 +8,6 @@ class Fiddle::Operation
 
   # Abstract operation
   class Abstract
-    extend ActiveSupport::Memoizable
 
     # Callback, registers class
     def self.inherited(base)
@@ -56,17 +55,16 @@ class Fiddle::Operation
     # @return [Boolean]
     #   Is the given value valid?
     def valid?
+      return @is_valid if defined?(@is_valid)
       return false unless type_class.operations.include?(self.class.code)
-      sql_args.is_a?(Array) && !sql_args.empty? && sql_args.none?(&:nil?)
+      @is_valid = sql_args.is_a?(Array) && !sql_args.empty? && sql_args.none?(&:nil?)
     end
-    memoize :valid?
 
     # @return [Array]
     #   the SQL arguments, or nil if invalid
     def sql_args
-      [type_class.new(value.to_s).convert]
+      @sql_args ||= [type_class.new(value.to_s).convert]
     end
-    memoize :sql_args
 
     # @return [String]
     #   the SQL clause

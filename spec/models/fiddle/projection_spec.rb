@@ -28,7 +28,7 @@ describe Fiddle::Projection do
     it { should_not allow_value(value).for(:type_code) }
   end
 
-  [:name, :clause, :sortable, :type_code].each do |attribute|
+  [:name, :description, :clause, :sortable, :type_code].each do |attribute|
     it { should allow_mass_assignment_of(attribute) }
   end
   [:cube_id].each do |attribute|

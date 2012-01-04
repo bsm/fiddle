@@ -19,7 +19,7 @@ class Fiddle::Projection < Fiddle::Base
   validate  :ensure_references_match
 
   # ---> ATTRIBUTES
-  attr_accessible :name, :clause, :sortable, :type_code
+  attr_accessible :name, :description, :clause, :sortable, :type_code
 
   # @return [Fiddle::DataType] the assocaited data type
   def type_class
