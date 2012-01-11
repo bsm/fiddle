@@ -21,7 +21,7 @@ describe Fiddle::DataType do
   end
 
   describe "Abstract" do
-    metadata[:example_group][:describes] = described_class::Abstract
+    metadata[:example_group][:described_class] = described_class::Abstract
 
     it 'should have a code' do
       Fiddle::DataType::Numeric.code.should == "numeric"
@@ -30,7 +30,7 @@ describe Fiddle::DataType do
   end
 
   describe "String" do
-    metadata[:example_group][:describes] = described_class::String
+    metadata[:example_group][:described_class] = described_class::String
 
     it 'should declare valid operations' do
       described_class.operations.should =~ ["eq", "not_eq", "in", "not_in"]
@@ -44,7 +44,7 @@ describe Fiddle::DataType do
   end
 
   describe "Numeric" do
-    metadata[:example_group][:describes] = described_class::Numeric
+    metadata[:example_group][:described_class] = described_class::Numeric
 
     it 'should declare valid operations' do
       described_class.operations.should =~ ["eq", "not_eq", "in", "not_in", "gt", "lt", "gteq", "lteq", "between"]
@@ -58,7 +58,7 @@ describe Fiddle::DataType do
   end
 
   describe "Integer" do
-    metadata[:example_group][:describes] = described_class::Integer
+    metadata[:example_group][:described_class] = described_class::Integer
 
     it { should be_a(Fiddle::DataType::Numeric) }
 
@@ -70,7 +70,7 @@ describe Fiddle::DataType do
   end
 
   describe "Datetime" do
-    metadata[:example_group][:describes] = described_class::Datetime
+    metadata[:example_group][:described_class] = described_class::Datetime
 
     it 'should declare valid operations' do
       described_class.operations.should =~ ["gt", "lt", "gteq", "lteq", "between"]
@@ -86,7 +86,7 @@ describe Fiddle::DataType do
   end
 
   describe "Date" do
-    metadata[:example_group][:describes] = described_class::Date
+    metadata[:example_group][:described_class] = described_class::Date
 
     it 'should declare valid operations' do
       described_class.operations.should =~ ["eq", "not_eq", "gt", "lt", "gteq", "lteq", "between"]

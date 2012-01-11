@@ -25,8 +25,11 @@ class Fiddle::ParamParser
   def initialize(parent, options = nil)
     options     = {} unless options.is_a?(Hash)
     @parent     = parent
+
     @measures   = parse_collection parent.measures, options[:select]
+    @measures   = parent.measures if @measures.empty?
     @dimensions = parse_collection parent.dimensions, options[:by]
+
     @orders     = parse_orders(options[:order])
     @limit      = parse_integer(options[:limit], options[:per_page], :default => 100)
     @offset     = parse_integer(options[:offset], page_offset(options[:page]))
@@ -88,10 +91,7 @@ class Fiddle::ParamParser
     # @return [Array] parsed collection
     def parse_collection(collection, value, options = {})
       names = normalize_array(value)
-      items = collection.to_a.select {|i| names.include?(i.name) }
-      return items unless items.empty?
-
-      options[:allow_blank] ? [] : collection
+      collection.to_a.select {|i| names.include?(i.name) }
     end
 
 end

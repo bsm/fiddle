@@ -16,6 +16,19 @@ describe Fiddle::SQLBuilder do
       :orders     => [Fiddle::SortOrder.new(fiddle_projections(:page_views), "DESC")]
   end
 
+  let :total_page_views do
+    build :measures => fiddle_projections(:page_views)
+  end
+
+  let :page_views_by_site do
+    build :measures => fiddle_projections(:page_views), :dimensions => fiddle_projections(:website_id, :website_name)
+  end
+
+
+  let :total_page_views do
+    build :measures => fiddle_projections(:page_views),
+  end
+
   it "should have a cube" do
     subject.cube.should == fiddle_cubes(:stats)
   end
@@ -32,38 +45,16 @@ describe Fiddle::SQLBuilder do
     opts[:order].should =~ ["page_views DESC"]
     opts[:limit].should == 100
     opts[:offset].should == 0
+    opts[:where].should be_a(Sequel::SQL::PlaceholderLiteralString)
+    opts[:where].to_s(subject.dataset).should == "websites.name = 'my'"
+    opts[:having].should be_a(Sequel::SQL::PlaceholderLiteralString)
+    opts[:having].to_s(subject.dataset).should == "SUM(stats.page_views) > 1000"
   end
 
   it "should construct SQL statements" do
     subject.to_s.should match(/SELECT .+ FROM .+ LEFT OUTER JOIN .+ WHERE .+ GROUP BY .+ HAVING .+ ORDER BY .+ LIMIT .+ OFFSET/)
+    page_views_by_site.to_s.should == "SELECT stats.website_id AS website_id, websites.name AS website_name, SUM(stats.page_views) AS page_views FROM stats LEFT OUTER JOIN dim_websites AS websites ON websites.id = stats.website_id GROUP BY stats.website_id, websites.name LIMIT 100 OFFSET 0"
+    total_page_views.to_s.should == "SELECT SUM(stats.page_views) AS page_views FROM stats LIMIT 100 OFFSET 0"
   end
 
-=begin
-  it "should build select clauses" do
-    subject.select_clauses.should =~ [
-      "SUM(stats.page_views) / (SUM(stats.visits) * 1.0) AS ppv",
-      "SUM(stats.page_views) AS page_views",
-      "SUM(stats.visits) AS visits",
-      "stats.website_id AS website_id",
-      "websites.name AS website_name",
-      "stats.date AS date"]
-    page_views_by_site.select_clauses.should =~ ["websites.name AS website_name", "SUM(stats.page_views) AS page_views"]
-    total_page_views.select_clauses.should =~ ["SUM(stats.page_views) AS page_views"]
-  end
-
-  it "should build group clauses" do
-    subject.group_clauses.should =~ ["stats.website_id", "websites.name", "stats.date"]
-    page_views_by_site.group_clauses.should =~ ["websites.name"]
-    total_page_views.group_clauses.should == []
-  end
-
-  it "should build where clauses" do
-
-  end
-
-  it "should build full SQL statements" do
-    subject.to_s.should match(/SELECT .+? FROM stats LEFT OUTER JOIN dim_websites .+? GROUP BY .+?/)
-    total_page_views.to_s.should_not include("JOIN")
-  end
-=end
 end

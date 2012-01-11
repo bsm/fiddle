@@ -23,6 +23,7 @@ describe Fiddle::ParamParser do
 
   it "should should parse measures" do
     subject.measures.should =~ fiddle_projections(:page_views, :visits, :ppv)
+    build(:select => "page_views").measures.should =~ [fiddle_projections(:page_views)]
     build(:select => ["page_views", "ppv", "invalid"]).measures.should =~ fiddle_projections(:page_views, :ppv)
     build(:select => "page_views|ppv|invalid").measures.should =~ fiddle_projections(:page_views, :ppv)
     build(:select => ["page_views|ppv|invalid"]).measures.should =~ fiddle_projections(:page_views, :ppv)
@@ -31,20 +32,32 @@ describe Fiddle::ParamParser do
     build(:select => "invalid_a|invalid_b").measures.should =~ subject.measures
   end
 
+  it "should NOT allow measures to be empty" do
+    build(:by => "website_id").measures.should =~ fiddle_projections(:page_views, :visits, :ppv)
+  end
+
   it "should should parse dimensions" do
-    subject.dimensions.should =~ fiddle_projections(:website_id, :website_name, :date)
+    subject.dimensions.should == []
     build(:by => "website_id").dimensions.should =~ [fiddle_projections(:website_id)]
+  end
+
+  it "should allow dimensions to be empty" do
+    build(:select => "ppv").dimensions.should == []
   end
 
   it "should should parse sort orders" do
     subject.orders.should == []
-    build(:order => "website_id.desc|page_views").orders.should have(2).items
-    build(:order => "website_id.desc|page_views").orders.first.should be_a(Fiddle::SortOrder)
-    build(:order => "website_id.desc|page_views").orders.should == ["website_id DESC", "page_views ASC"]
-    build(:order => ["website_id.0", "page_views.1"]).orders.should == ["website_id ASC", "page_views DESC"]
-    build(:order => ["website_id.d"]).orders.should == ["website_id DESC"]
-    build(:order => ["website_id.x"]).orders.should == ["website_id ASC"]
-    build(:order => ["invalid.d"]).orders.should == []
+    build(:order => "website_id.desc|page_views").orders.should have(1).item
+
+    orders = build(:by => 'website_id', :order => "website_id.desc|page_views").orders
+    orders.should have(2).items
+    orders.first.should be_a(Fiddle::SortOrder)
+    orders.should == ["website_id DESC", "page_views ASC"]
+
+    build(:by => 'website_id', :order => ["website_id.0", "page_views.1"]).orders.should == ["website_id ASC", "page_views DESC"]
+    build(:by => 'website_id', :order => ["website_id.d"]).orders.should == ["website_id DESC"]
+    build(:by => 'website_id', :order => ["website_id.x"]).orders.should == ["website_id ASC"]
+    build(:by => 'website_id', :order => ["invalid.d"]).orders.should == []
   end
 
   it "should parse limits" do
@@ -77,7 +90,7 @@ describe Fiddle::ParamParser do
 
   it 'should convert to options hash' do
     subject.to_hash.keys.should =~ [:operations, :dimensions, :limit, :measures, :offset, :orders]
-    subject.to_hash.values_at(:dimensions, :measures, :operations, :orders).map(&:size).should == [3, 3, 0, 0]
+    subject.to_hash.values_at(:dimensions, :measures, :operations, :orders).map(&:size).should == [0, 3, 0, 0]
   end
 
 end
