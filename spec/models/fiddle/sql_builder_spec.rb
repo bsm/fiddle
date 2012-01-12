@@ -26,7 +26,7 @@ describe Fiddle::SQLBuilder do
 
 
   let :total_page_views do
-    build :measures => fiddle_projections(:page_views),
+    build :measures => fiddle_projections(:page_views)
   end
 
   it "should have a cube" do
