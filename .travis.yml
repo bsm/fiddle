@@ -3,4 +3,4 @@ rvm:
   - 1.9.3
 gemfile:
   - Gemfile
-  - Gemfile.railties-3.2.x
+  - Gemfile.railties-3.1.x
