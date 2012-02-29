@@ -1,6 +1,6 @@
-publisher:
+publishers:
   name: publishers
-  clause: dim_publisher
+  clause: dim_publishers
   value_clause: id
   label_clause: name
   cube: stats

@@ -18,4 +18,35 @@ class Fiddle::Lookup < Fiddle::Base
   # ----> ATTRIBUTES
   attr_accessible :name, :clause, :label_clause, :value_clause
 
+  # ----> INSTANCE METHODS
+
+  # @return [Sequel::LiteralString] the SELECT SQL clause
+  def select_sql
+    Sequel::LiteralString.new [construct_select(value_clause), construct_select(label_clause)].join(', ')
+  end
+
+  # @return [String] the FROM SQL clause
+  def from_sql
+    [clause, name].uniq.join(" AS ")
+  end
+
+  #@return [Sequel::LiteralString] the ORDER BY clause
+  def order_sql
+    Sequel::LiteralString.new "#{label_clause} DESC"
+  end
+
+  # @return [Sequel::Dataset]
+  def dataset
+    cube.dataset.
+      select(select_sql).
+      from(from_sql).
+      order(order_sql)
+  end
+
+  private
+
+    def construct_select(col)
+      "#{name}.#{col} AS #{col}"
+    end
+
 end

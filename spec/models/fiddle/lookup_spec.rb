@@ -1,7 +1,8 @@
 require 'spec_helper'
 
 describe Fiddle::Lookup do
-  fixtures :fiddle_lookups, :fiddle_cubes
+  fixtures :fiddle_lookups, :fiddle_cubes, :fiddle_universes
+
   it { should be_a(::Fiddle::Base) }
 
   # ----> ASSOCIATIONS
@@ -33,6 +34,28 @@ describe Fiddle::Lookup do
   end
   [:cube_id].each do |attribute|
     it { should_not allow_mass_assignment_of(attribute) }
+  end
+
+  # ----> INSTANCE METHODS
+
+  it 'should build select sql' do
+    fiddle_lookups(:publishers).select_sql.should == "publishers.id AS id, publishers.name AS name"
+  end
+
+  it 'should build from sql' do
+    fiddle_lookups(:publishers).from_sql.should == "dim_publishers AS publishers"
+  end
+
+  it 'should build from sql' do
+    fiddle_lookups(:publishers).order_sql.should == "name DESC"
+  end
+
+  it 'should build a dataset' do
+    fiddle_lookups(:publishers).dataset.should be_a(Sequel::Dataset)
+    opts = fiddle_lookups(:publishers).dataset.opts
+    opts[:select].should  =~ ["publishers.id AS id, publishers.name AS name"]
+    opts[:from].should    =~ ["dim_publishers AS publishers"]
+    opts[:order].should   =~ ["name DESC"]
   end
 
 end
