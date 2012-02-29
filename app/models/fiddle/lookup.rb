@@ -32,7 +32,7 @@ class Fiddle::Lookup < Fiddle::Base
 
   #@return [Sequel::LiteralString] the ORDER BY clause
   def order_sql
-    Sequel::LiteralString.new "#{label_clause} DESC"
+    Sequel::LiteralString.new "#{label_clause} ASC"
   end
 
   # @return [Sequel::Dataset]
