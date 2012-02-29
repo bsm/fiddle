@@ -27,7 +27,7 @@ class Fiddle::Lookup < Fiddle::Base
 
   # @return [String] the FROM SQL clause
   def from_sql
-    [clause, name].uniq.join(" AS ")
+    [ "( #{clause} )" , name].uniq.join(" AS ")
   end
 
   #@return [Sequel::LiteralString] the ORDER BY clause

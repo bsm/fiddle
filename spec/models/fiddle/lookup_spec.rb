@@ -43,7 +43,7 @@ describe Fiddle::Lookup do
   end
 
   it 'should build from sql' do
-    fiddle_lookups(:publishers).from_sql.should == "dim_publishers AS publishers"
+    fiddle_lookups(:publishers).from_sql.should == "( dim_publishers ) AS publishers"
   end
 
   it 'should build from sql' do
@@ -54,7 +54,7 @@ describe Fiddle::Lookup do
     fiddle_lookups(:publishers).dataset.should be_a(Sequel::Dataset)
     opts = fiddle_lookups(:publishers).dataset.opts
     opts[:select].should  =~ ["publishers.id AS id, publishers.name AS name"]
-    opts[:from].should    =~ ["dim_publishers AS publishers"]
+    opts[:from].should    =~ ["( dim_publishers ) AS publishers"]
     opts[:order].should   =~ ["name DESC"]
   end
 
