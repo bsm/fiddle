@@ -57,7 +57,7 @@ describe Fiddle::Lookup do
     fiddle_lookups(:websites).from_sql.should == "( SELECT * FROM dim_websites WHERE id > 0 ) AS websites"
   end
 
-  it 'should build from sql' do
+  it 'should build order sql' do
     fiddle_lookups(:websites).order_sql.should == "( name )"
   end
 
