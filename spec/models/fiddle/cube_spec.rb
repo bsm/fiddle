@@ -9,6 +9,7 @@ describe Fiddle::Cube do
   it { should have_many(:dimensions) }
   it { should have_many(:measures) }
   it { should have_many(:constraints) }
+  it { should have_many(:lookups) }
 
   it { should validate_presence_of(:universe) }
   it { should validate_presence_of(:name) }

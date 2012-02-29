@@ -29,7 +29,8 @@ RSpec.configure do |config|
       fiddle_cubes: Fiddle::Cube,
       fiddle_projections: Fiddle::Projection,
       fiddle_relations: Fiddle::Relation,
-      fiddle_constraints: Fiddle::Constraint
+      fiddle_constraints: Fiddle::Constraint,
+      fiddle_lookups: Fiddle::Lookup
   end
 
 end

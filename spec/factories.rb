@@ -46,4 +46,12 @@ FactoryGirl.define do
     name  { FactoryGirl.generate(:name_alias) }
   end
 
+  factory :lookup, :class => "Fiddle::Lookup" do
+    name          { FactoryGirl.generate(:name_alias) }
+    clause        "some_table"
+    value_clause  "id"
+    label_clause  "name"
+    cube
+  end
+
 end

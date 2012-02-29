@@ -29,7 +29,7 @@ describe Fiddle::Universe do
   it 'should fail if URI is not connectable' do
     subject.uri = "postgres://user:pass@locahost:22/db_name?key=value"
     subject.should have(1).error_on(:uri)
-    subject.errors[:uri].first.should match(/cannot be connected. PGError/)
+    subject.errors[:uri].first.should match(/cannot be connected. PG::Error/)
   end
 
   it 'should fail adapter is unavailable' do
