@@ -1,17 +1,17 @@
 require 'spec_helper'
 
 describe Fiddle::Lookup do
-  fixtures :fiddle_lookups, :fiddle_cubes, :fiddle_universes
+  fixtures :fiddle_lookups, :fiddle_universes
 
   it { should be_a(::Fiddle::Base) }
 
   # ----> ASSOCIATIONS
-  it { should belong_to(:cube) }
+  it { should belong_to(:universe) }
 
   # ----> VALIDATIONS
   it { should validate_presence_of(:name) }
   it { should ensure_length_of(:name).is_at_most(30) }
-  it { should validate_uniqueness_of(:name).scoped_to(:cube_id) }
+  it { should validate_uniqueness_of(:name).scoped_to(:universe_id) }
   ["example", "an_example", "_example"].each do |value|
     it { should validate_format_of(:name).with(value) }
   end
@@ -32,7 +32,7 @@ describe Fiddle::Lookup do
   [:name, :clause, :label_clause, :value_clause].each do |attribute|
     it { should allow_mass_assignment_of(attribute) }
   end
-  [:cube_id].each do |attribute|
+  [:universe_id].each do |attribute|
     it { should_not allow_mass_assignment_of(attribute) }
   end
 

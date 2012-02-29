@@ -9,6 +9,7 @@ class Fiddle::Universe < ActiveRecord::Base
 
   # ---> ASSOCIATIONS
   has_many :cubes, :dependent => :destroy
+  has_many :lookups, :dependent => :destroy
 
   # ---> VALIDATIONS
   validates :name, :presence => true, :length => { :maximum => 40 }, :uniqueness => { :case_sensitive => false, :allow_blank => true }

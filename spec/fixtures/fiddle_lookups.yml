@@ -3,4 +3,4 @@ publishers:
   clause: dim_publishers
   value_clause: id
   label_clause: name
-  cube: stats
+  universe: sqlite

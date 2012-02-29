@@ -51,7 +51,7 @@ FactoryGirl.define do
     clause        "some_table"
     value_clause  "id"
     label_clause  "name"
-    cube
+    universe
   end
 
 end

@@ -6,14 +6,14 @@ describe Fiddle::LookupsController do
     create :lookup
   end
 
-  let :cube do
-    lookup.cube
+  let :universe do
+    lookup.universe
   end
 
   describe "GET index" do
     before do
       lookup # create one
-      get :index, :cube_id => cube.to_param, :use_route => :fiddle
+      get :index, :universe_id => universe.to_param, :use_route => :fiddle
     end
 
     it { should assign_to(:lookups).with([lookup]) }
@@ -33,7 +33,7 @@ describe Fiddle::LookupsController do
 
   describe "GET new" do
     before do
-      get :new, :cube_id => cube.to_param, :use_route => :fiddle
+      get :new, :universe_id => universe.to_param, :use_route => :fiddle
     end
 
     it { should assign_to(:lookup) }
@@ -43,8 +43,8 @@ describe Fiddle::LookupsController do
 
   describe "POST create" do
     before do
-      attrs = attributes_for :lookup, :cube => nil
-      post :create, :cube_id => cube.to_param, :lookup => attrs, :use_route => :fiddle
+      attrs = attributes_for :lookup, :universe => nil
+      post :create, :universe_id => universe.to_param, :lookup => attrs, :use_route => :fiddle
     end
 
     let :last_added do
@@ -80,7 +80,7 @@ describe Fiddle::LookupsController do
     end
 
     it { should assign_to(:lookup).with(lookup) }
-    it { should redirect_to("/my/cubes/#{cube.to_param}/lookups") }
+    it { should redirect_to("/my/universes/#{universe.to_param}/lookups") }
   end
 
 end

@@ -1,10 +1,10 @@
 class Fiddle::Lookup < Fiddle::Base
 
   # ----> ASSOCIATIONS
-  belongs_to :cube
+  belongs_to :universe
 
   # ----> VALIDATIONS
-  validates_name_alias :scope => :cube_id
+  validates_name_alias :scope => :universe_id
   validates :clause,
     :presence => true,
     :length   => { :maximum => 2000 }
@@ -37,7 +37,7 @@ class Fiddle::Lookup < Fiddle::Base
 
   # @return [Sequel::Dataset]
   def dataset
-    cube.dataset.
+    universe.conn.dataset.
       select(select_sql).
       from(from_sql).
       order(order_sql)

@@ -4,6 +4,7 @@ describe Fiddle::Universe do
   fixtures :fiddle_universes
 
   it { should have_many(:cubes).dependent(:destroy) }
+  it { should have_many(:lookups).dependent(:destroy) }
 
   it { should validate_presence_of(:name) }
   it { should ensure_length_of(:name).is_at_most(40) }

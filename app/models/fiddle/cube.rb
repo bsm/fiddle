@@ -9,7 +9,6 @@ class Fiddle::Cube < Fiddle::Base
   has_many   :dimensions
   has_many   :measures
   has_many   :constraints
-  has_many   :lookups
 
   # ---> VALIDATIONS
   validates_name_alias :scope => :universe_id
