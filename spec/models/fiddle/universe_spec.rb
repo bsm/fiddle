@@ -28,15 +28,15 @@ describe Fiddle::Universe do
   end
 
   it 'should fail if URI is not connectable' do
-    subject.uri = "postgres://user:pass@locahost:22/db_name?key=value"
+    subject.uri = "postgres://user:pass@127.0.0.1:22/db_name?key=value"
     subject.should have(1).error_on(:uri)
-    subject.errors[:uri].first.should match(/cannot be connected. PG::Error/)
+    subject.errors[:uri].first.should include("cannot be connected")
   end
 
   it 'should fail adapter is unavailable' do
     subject.uri = "do:mysql://example.com/db_name"
     subject.should have(1).error_on(:uri)
-    subject.errors[:uri].should == ["cannot be connected. No such adapter 'do:mysql'"]
+    subject.errors[:uri].first.should include("cannot be connected. No such adapter")
   end
 
   it 'should connect to URI' do
