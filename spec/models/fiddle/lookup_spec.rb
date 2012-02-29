@@ -3,6 +3,17 @@ require 'spec_helper'
 describe Fiddle::Lookup do
   fixtures :fiddle_lookups, :fiddle_universes
 
+  before do
+    fiddle_universes(:sqlite).conn.create_table :dim_websites do
+      primary_key :id
+      String :name
+    end
+  end
+
+  after do
+    fiddle_universes(:sqlite).conn.drop_table :dim_websites
+  end
+
   it { should be_a(::Fiddle::Base) }
 
   # ----> ASSOCIATIONS
@@ -39,23 +50,21 @@ describe Fiddle::Lookup do
   # ----> INSTANCE METHODS
 
   it 'should build select sql' do
-    fiddle_lookups(:publishers).select_sql.should == "publishers.id AS id, publishers.name AS name"
+    fiddle_lookups(:websites).select_sql.should == "( id ) AS value, ( name ) AS label"
   end
 
   it 'should build from sql' do
-    fiddle_lookups(:publishers).from_sql.should == "( dim_publishers ) AS publishers"
+    fiddle_lookups(:websites).from_sql.should == "( SELECT * FROM dim_websites WHERE id > 0 ) AS websites"
   end
 
   it 'should build from sql' do
-    fiddle_lookups(:publishers).order_sql.should == "name DESC"
+    fiddle_lookups(:websites).order_sql.should == "( name )"
   end
 
   it 'should build a dataset' do
-    fiddle_lookups(:publishers).dataset.should be_a(Sequel::Dataset)
-    opts = fiddle_lookups(:publishers).dataset.opts
-    opts[:select].should  =~ ["publishers.id AS id, publishers.name AS name"]
-    opts[:from].should    =~ ["( dim_publishers ) AS publishers"]
-    opts[:order].should   =~ ["name DESC"]
+    fiddle_lookups(:websites).dataset.should be_a(Sequel::Dataset)
+    fiddle_lookups(:websites).dataset.sql.should == %(SELECT ( id ) AS value, ( name ) AS label FROM ( SELECT * FROM dim_websites WHERE id > 0 ) AS websites ORDER BY ( name ))
+    fiddle_lookups(:websites).dataset.to_a.should == []
   end
 
 end

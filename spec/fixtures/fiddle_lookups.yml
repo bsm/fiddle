@@ -1,6 +1,6 @@
-publishers:
-  name: publishers
-  clause: dim_publishers
+websites:
+  name: websites
+  clause: SELECT * FROM dim_websites WHERE id > 0
   value_clause: id
   label_clause: name
   universe: sqlite
