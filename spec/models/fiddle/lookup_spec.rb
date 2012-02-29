@@ -50,20 +50,20 @@ describe Fiddle::Lookup do
   # ----> INSTANCE METHODS
 
   it 'should build select sql' do
-    fiddle_lookups(:websites).select_sql.should == "( id ) AS value, ( name ) AS label"
+    fiddle_lookups(:websites).select_sql.should == "id AS value, name AS label"
   end
 
   it 'should build from sql' do
-    fiddle_lookups(:websites).from_sql.should == "( SELECT * FROM dim_websites WHERE id > 0 ) AS websites"
+    fiddle_lookups(:websites).from_sql.should == "(SELECT * FROM dim_websites WHERE id > 0) websites"
   end
 
   it 'should build order sql' do
-    fiddle_lookups(:websites).order_sql.should == "( name )"
+    fiddle_lookups(:websites).order_sql.should == "label"
   end
 
   it 'should build a dataset' do
     fiddle_lookups(:websites).dataset.should be_a(Sequel::Dataset)
-    fiddle_lookups(:websites).dataset.sql.should == %(SELECT ( id ) AS value, ( name ) AS label FROM ( SELECT * FROM dim_websites WHERE id > 0 ) AS websites ORDER BY ( name ))
+    fiddle_lookups(:websites).dataset.sql.should == %(SELECT id AS value, name AS label FROM (SELECT * FROM dim_websites WHERE id > 0) websites ORDER BY label)
     fiddle_lookups(:websites).dataset.to_a.should == []
   end
 

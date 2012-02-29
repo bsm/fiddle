@@ -22,28 +22,28 @@ class Fiddle::Lookup < Fiddle::Base
 
   # @return [Sequel::LiteralString] the SELECT SQL clause
   def select_sql
-    Sequel::LiteralString.new [build_cause(value_clause, :value), build_cause(label_clause, :label)].join(', ')
+    Sequel::LiteralString.new [build_clause(value_clause, :value, " AS "), build_clause(label_clause, :label, " AS ")].join(', ')
   end
 
   # @return [String] the FROM SQL clause
   def from_sql
-    Sequel::LiteralString.new build_cause(clause, name)
+    Sequel::LiteralString.new build_clause(clause, name)
   end
 
   #@return [Sequel::LiteralString] the ORDER BY clause
   def order_sql
-    Sequel::LiteralString.new "( #{label_clause} )"
+    Sequel::LiteralString.new "label"
   end
 
   # @return [Sequel::Dataset]
   def dataset
-    universe.conn.dataset.select(select_sql).from(from_sql).order(order_sql)
+    @dataset ||= universe.conn.dataset.select(select_sql).from(from_sql).order(order_sql)
   end
 
   private
 
-    def build_cause(value, aliaz)
-      "( #{value} ) AS #{aliaz}"
+    def build_clause(value, aliaz, connector = ' ')
+      [value, aliaz].compact.uniq.join(connector)
     end
 
 end
