@@ -61,11 +61,10 @@ describe Fiddle::Lookup do
     fiddle_lookups(:websites).order_sql.should == "label"
   end
 
-  it 'should build a dataset (private method)' do
-    dataset = fiddle_lookups(:websites).send :dataset
-    dataset.should be_a(Sequel::Dataset)
-    dataset.sql.should == %(SELECT id AS value, name AS label FROM (SELECT * FROM dim_websites WHERE id > 0) websites ORDER BY label)
-    dataset.to_a.should == []
+  it 'should build a dataset' do
+    fiddle_lookups(:websites).dataset.should be_a(Sequel::Dataset)
+    fiddle_lookups(:websites).dataset.sql.should == %(SELECT id AS value, name AS label FROM (SELECT * FROM dim_websites WHERE id > 0) websites ORDER BY label)
+    fiddle_lookups(:websites).dataset.to_a.should == []
   end
 
 end

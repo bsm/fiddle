@@ -35,12 +35,12 @@ class Fiddle::Lookup < Fiddle::Base
     Sequel::LiteralString.new "label"
   end
 
-  private
+  # @return [Sequel::Dataset]
+  def dataset
+    @dataset ||= universe.conn.dataset.select(select_sql).from(from_sql).order(order_sql)
+  end
 
-    # @return [Sequel::Dataset]
-    def dataset
-      @dataset ||= universe.conn.dataset.select(select_sql).from(from_sql).order(order_sql)
-    end
+  private
 
     def build_clause(value, aliaz, connector = ' ')
       [value, aliaz].compact.uniq.join(connector)
