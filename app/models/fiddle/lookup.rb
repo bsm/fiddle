@@ -21,7 +21,12 @@ class Fiddle::Lookup < Fiddle::Base
 
   # @return [Sequel::LiteralString] the SELECT SQL clause
   def select_sql
-    Sequel::LiteralString.new [build_clause(value_clause, :value, " AS "), build_clause(label_clause, :label, " AS ")].join(', ')
+    Sequel::LiteralString.new [
+      build_clause(value_clause, :value, " AS "),
+      build_clause(label_clause, :label, " AS "),
+      build_clause(parent_label_clause, :parent_label, " AS "),
+      build_clause(parent_value_clause, :parent_value, " AS ")
+    ].compact.join(', ')
   end
 
   # @return [String] the FROM SQL clause
@@ -42,6 +47,7 @@ class Fiddle::Lookup < Fiddle::Base
   private
 
     def build_clause(value, aliaz, connector = ' ')
+      return nil unless value.present?
       [value, aliaz].compact.uniq.join(connector)
     end
 

@@ -1,6 +1,14 @@
-websites:
-  name: websites
-  clause: "(SELECT * FROM dim_websites WHERE id > 0)"
+publishers:
+  name: publishers
+  clause: "(SELECT * FROM dim_publishers WHERE id > 0)"
   value_clause: id
   label_clause: name
+  universe: sqlite
+websites:
+  name: websites
+  clause: "(SELECT dim_websites.id AS id, dim_websites.name AS website_name, dim_websites.publisher_id AS publisher_id, dim_publishers.name AS publisher_name FROM dim_websites INNER JOIN dim_publishers ON dim_publishers.id = dim_websites.publisher_id WHERE id > 0)"
+  value_clause: id
+  label_clause: name
+  parent_value_clause: publisher_id
+  parent_label_clause: publisher_name
   universe: sqlite
