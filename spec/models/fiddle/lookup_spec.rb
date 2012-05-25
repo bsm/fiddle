@@ -4,13 +4,20 @@ describe Fiddle::Lookup do
   fixtures :fiddle_lookups, :fiddle_universes
 
   before do
+    fiddle_universes(:sqlite).conn.create_table :dim_publishers do
+      primary_key :id
+      String :name
+    end
+
     fiddle_universes(:sqlite).conn.create_table :dim_websites do
       primary_key :id
       String :name
+      Integer :publisher_id
     end
   end
 
   after do
+    fiddle_universes(:sqlite).conn.drop_table :dim_publishers
     fiddle_universes(:sqlite).conn.drop_table :dim_websites
   end
 
@@ -39,8 +46,14 @@ describe Fiddle::Lookup do
   it { should validate_presence_of(:value_clause) }
   it { should ensure_length_of(:value_clause).is_at_most(255) }
 
+  it { should_not validate_presence_of(:parent_label_clause) }
+  it { should ensure_length_of(:parent_label_clause).is_at_most(255) }
+
+  it { should_not validate_presence_of(:parent_value_clause) }
+  it { should ensure_length_of(:parent_value_clause).is_at_most(255) }
+
   # ----> ATTRIBUTES
-  [:name, :clause, :label_clause, :value_clause].each do |attribute|
+  [:name, :clause, :label_clause, :value_clause, :parent_label_clause, :parent_value_clause].each do |attribute|
     it { should allow_mass_assignment_of(attribute) }
   end
   [:universe_id].each do |attribute|
@@ -50,21 +63,22 @@ describe Fiddle::Lookup do
   # ----> INSTANCE METHODS
 
   it 'should build select sql' do
-    fiddle_lookups(:websites).select_sql.should == "id AS value, name AS label"
+    fiddle_lookups(:publishers).select_sql.should == "id AS value, name AS label"
+    fiddle_lookups(:websites).select_sql.should == "id AS value, name AS label, publisher_name AS parent_label, publisher_id AS parent_value"
   end
 
   it 'should build from sql' do
-    fiddle_lookups(:websites).from_sql.should == "(SELECT * FROM dim_websites WHERE id > 0) websites"
+    fiddle_lookups(:publishers).from_sql.should == "(SELECT * FROM dim_publishers WHERE id > 0) publishers"
   end
 
   it 'should build order sql' do
-    fiddle_lookups(:websites).order_sql.should == "label"
+    fiddle_lookups(:publishers).order_sql.should == "label"
   end
 
   it 'should build a dataset' do
-    fiddle_lookups(:websites).dataset.should be_a(Sequel::Dataset)
-    fiddle_lookups(:websites).dataset.sql.should == %(SELECT id AS value, name AS label FROM (SELECT * FROM dim_websites WHERE id > 0) websites ORDER BY label)
-    fiddle_lookups(:websites).dataset.to_a.should == []
+    fiddle_lookups(:publishers).dataset.should be_a(Sequel::Dataset)
+    fiddle_lookups(:publishers).dataset.sql.should == %(SELECT id AS value, name AS label FROM (SELECT * FROM dim_publishers WHERE id > 0) publishers ORDER BY label)
+    fiddle_lookups(:publishers).dataset.to_a.should == []
   end
 
 end
