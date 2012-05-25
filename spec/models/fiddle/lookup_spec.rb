@@ -46,14 +46,11 @@ describe Fiddle::Lookup do
   it { should validate_presence_of(:value_clause) }
   it { should ensure_length_of(:value_clause).is_at_most(255) }
 
-  it { should_not validate_presence_of(:parent_label_clause) }
-  it { should ensure_length_of(:parent_label_clause).is_at_most(255) }
-
   it { should_not validate_presence_of(:parent_value_clause) }
   it { should ensure_length_of(:parent_value_clause).is_at_most(255) }
 
   # ----> ATTRIBUTES
-  [:name, :clause, :label_clause, :value_clause, :parent_label_clause, :parent_value_clause].each do |attribute|
+  [:name, :clause, :label_clause, :value_clause, :parent_value_clause].each do |attribute|
     it { should allow_mass_assignment_of(attribute) }
   end
   [:universe_id].each do |attribute|
@@ -64,7 +61,7 @@ describe Fiddle::Lookup do
 
   it 'should build select sql' do
     fiddle_lookups(:publishers).select_sql.should == "id AS value, name AS label"
-    fiddle_lookups(:websites).select_sql.should == "id AS value, name AS label, publisher_name AS parent_label, publisher_id AS parent_value"
+    fiddle_lookups(:websites).select_sql.should == "id AS value, name AS label, publisher_id AS parent_value"
   end
 
   it 'should build from sql' do

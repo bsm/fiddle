@@ -10,5 +10,4 @@ websites:
   value_clause: id
   label_clause: name
   parent_value_clause: publisher_id
-  parent_label_clause: publisher_name
   universe: sqlite

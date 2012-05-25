@@ -11,11 +11,11 @@ class Fiddle::Lookup < Fiddle::Base
   validates :label_clause, :value_clause,
     :presence => true,
     :length   => { :maximum => 255 }
-  validates :parent_label_clause, :parent_value_clause,
+  validates :parent_value_clause,
     :length   => { :maximum => 255 }
 
   # ----> ATTRIBUTES
-  attr_accessible :name, :clause, :label_clause, :value_clause, :parent_label_clause, :parent_value_clause
+  attr_accessible :name, :clause, :label_clause, :value_clause, :parent_value_clause
 
   # ----> INSTANCE METHODS
 
@@ -24,7 +24,6 @@ class Fiddle::Lookup < Fiddle::Base
     Sequel::LiteralString.new [
       build_clause(value_clause, :value, " AS "),
       build_clause(label_clause, :label, " AS "),
-      build_clause(parent_label_clause, :parent_label, " AS "),
       build_clause(parent_value_clause, :parent_value, " AS ")
     ].compact.join(', ')
   end
