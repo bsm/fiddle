@@ -72,6 +72,9 @@ describe Fiddle::ParamParser do
     build(:offset => "200").offset.should == 200
     build(:page => "2", :per_page => 30).offset.should == 30
     build(:offset => "200", :page => 3, :per_page => "30").offset.should == 200
+    build(:page => "1").offset.should == 0
+    build(:page => "2").offset.should == 100
+    build(:page => "0").offset.should == 0
   end
 
   it 'should parse operations' do

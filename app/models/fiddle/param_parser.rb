@@ -62,7 +62,7 @@ class Fiddle::ParamParser
     # @return [Integer] parsed integer
     def page_offset(number)
       number = Kernel.Float(number).to_i rescue nil
-      (number - 1) * limit if number
+      (number - 1) * limit if number && number > 0
     end
 
     # @return [Array] parsed order tuples. Example:
