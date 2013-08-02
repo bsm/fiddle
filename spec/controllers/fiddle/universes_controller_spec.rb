@@ -9,7 +9,7 @@ describe Fiddle::UniversesController do
   describe "GET index" do
     before do
       universe # create one
-      get :index, :use_route => :fiddle
+      get :index, use_route: :fiddle
     end
 
     it { assigns[:universes].should == [universe] }
@@ -25,7 +25,7 @@ describe Fiddle::UniversesController do
 
   describe "GET show" do
     before do
-      get :show, :id => universe.to_param, :use_route => :fiddle
+      get :show, id: universe.to_param, use_route: :fiddle
     end
 
     it { assigns[:universe].should == universe }
@@ -35,7 +35,7 @@ describe Fiddle::UniversesController do
 
   describe "GET new" do
     before do
-      get :new, :use_route => :fiddle
+      get :new, use_route: :fiddle
     end
 
     it { assigns[:universe].should be_present }
@@ -45,7 +45,7 @@ describe Fiddle::UniversesController do
 
   describe "POST create" do
     before do
-      post :create, :universe => attributes_for(:universe), :use_route => :fiddle
+      post :create, universe: attributes_for(:universe), use_route: :fiddle
     end
 
     let :last_added do
@@ -54,11 +54,12 @@ describe Fiddle::UniversesController do
 
     it { assigns[:universe].should == last_added }
     it { should redirect_to("/my/universes/#{last_added.to_param}") }
+    it { should permit_params(:name, :uri).for(:universe) } if Fiddle.strong_parameters?
   end
 
   describe "GET edit" do
     before do
-      get :edit, :id => universe.to_param, :use_route => :fiddle
+      get :edit, id: universe.to_param, use_route: :fiddle
     end
 
     it { assigns[:universe].should == universe }
@@ -68,16 +69,17 @@ describe Fiddle::UniversesController do
 
   describe "PUT update" do
     before do
-      put :update, :id => universe.to_param, :universe => {}, :use_route => :fiddle
+      put :update, id: universe.to_param, universe: universe.attributes.slice('name', 'uri'), use_route: :fiddle
     end
 
     it { assigns[:universe].should == universe }
     it { should redirect_to("/my/universes/#{universe.to_param}") }
+    it { should permit_params(:name, :uri).for(:universe) } if Fiddle.strong_parameters?
   end
 
   describe "DELETE destroy" do
     before do
-      delete :destroy, :id => universe.to_param, :use_route => :fiddle
+      delete :destroy, id: universe.to_param, use_route: :fiddle
     end
 
     it { assigns[:universe].should == universe }

@@ -9,6 +9,8 @@ require 'rspec/rails'
 require 'shoulda/matchers'
 require 'factory_girl'
 
+Dir[Rails.root.join("../../spec/support/**/*.rb")].each {|f| require f }
+
 RSpec.configure do |config|
   config.mock_with :rspec
   config.fixture_path = Fiddle::Engine.config.root.join('spec', 'fixtures')

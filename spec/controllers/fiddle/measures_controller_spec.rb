@@ -13,7 +13,7 @@ describe Fiddle::MeasuresController do
   describe "GET index" do
     before do
       measure # create one
-      get :index, :cube_id => cube.to_param, :use_route => :fiddle
+      get :index, cube_id: cube.to_param, use_route: :fiddle
     end
 
     it { assigns[:measures].should == [measure] }
@@ -23,7 +23,7 @@ describe Fiddle::MeasuresController do
 
   describe "GET show" do
     before do
-      get :show, :id => measure.to_param, :use_route => :fiddle
+      get :show, id: measure.to_param, use_route: :fiddle
     end
 
     it { assigns[:measure].should == measure }
@@ -33,7 +33,7 @@ describe Fiddle::MeasuresController do
 
   describe "GET new" do
     before do
-      get :new, :cube_id => cube.to_param, :use_route => :fiddle
+      get :new, cube_id: cube.to_param, use_route: :fiddle
     end
 
     it { assigns[:measure].should be_present }
@@ -43,8 +43,9 @@ describe Fiddle::MeasuresController do
 
   describe "POST create" do
     before do
-      attrs = attributes_for :measure, :cube => nil, :clause => "#{cube.name}.some_col"
-      post :create, :cube_id => cube.to_param, :measure => attrs, :use_route => :fiddle
+      attrs = attributes_for :measure, cube: nil, clause: "#{cube.name}.some_col"
+      attrs.merge! description: 'Some Col Description', sortable: true
+      post :create, cube_id: cube.to_param, measure: attrs, use_route: :fiddle
     end
 
     let :last_added do
@@ -53,11 +54,12 @@ describe Fiddle::MeasuresController do
 
     it { assigns[:measure].should == last_added }
     it { should redirect_to("/my/measures/#{last_added.to_param}") }
+    it { should permit_params(:name, :description, :clause, :sortable, :type_code).for(:measure) } if Fiddle.strong_parameters?
   end
 
   describe "GET edit" do
     before do
-      get :edit, :id => measure.to_param, :use_route => :fiddle
+      get :edit, id: measure.to_param, use_route: :fiddle
     end
 
     it { assigns[:measure].should == measure }
@@ -67,16 +69,18 @@ describe Fiddle::MeasuresController do
 
   describe "PUT update" do
     before do
-      put :update, :id => measure.to_param, :measure => {}, :use_route => :fiddle
+      put :update, id: measure.to_param, use_route: :fiddle,
+        measure: measure.attributes.slice('name', 'description', 'clause', 'sortable', 'type_code')
     end
 
     it { assigns[:measure].should == measure }
     it { should redirect_to("/my/measures/#{measure.to_param}") }
+    it { should permit_params(:name, :description, :clause, :sortable, :type_code).for(:measure) } if Fiddle.strong_parameters?
   end
 
   describe "DELETE destroy" do
     before do
-      delete :destroy, :id => measure.to_param, :use_route => :fiddle
+      delete :destroy, id: measure.to_param, use_route: :fiddle
     end
 
     it { assigns[:measure].should == measure }

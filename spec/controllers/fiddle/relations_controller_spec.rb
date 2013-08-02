@@ -13,7 +13,7 @@ describe Fiddle::RelationsController do
   describe "GET index" do
     before do
       relation # create one
-      get :index, :cube_id => cube.to_param, :use_route => :fiddle
+      get :index, cube_id: cube.to_param, use_route: :fiddle
     end
 
     it { assigns[:relations].should == [relation] }
@@ -23,7 +23,7 @@ describe Fiddle::RelationsController do
 
   describe "GET show" do
     before do
-      get :show, :id => relation.to_param, :use_route => :fiddle
+      get :show, id: relation.to_param, use_route: :fiddle
     end
 
     it { assigns[:relation].should == relation }
@@ -33,7 +33,7 @@ describe Fiddle::RelationsController do
 
   describe "GET new" do
     before do
-      get :new, :cube_id => cube.to_param, :use_route => :fiddle
+      get :new, cube_id: cube.to_param, use_route: :fiddle
     end
 
     it { assigns[:relation].should be_present }
@@ -43,8 +43,8 @@ describe Fiddle::RelationsController do
 
   describe "POST create" do
     before do
-      attrs = attributes_for :relation, :cube => nil, :predicate => "#{cube.name}.foreign_id = any.id"
-      post :create, :cube_id => cube.to_param, :relation => attrs, :use_route => :fiddle
+      attrs = attributes_for :relation, cube: nil, predicate: "#{cube.name}.foreign_id = any.id"
+      post :create, cube_id: cube.to_param, relation: attrs, use_route: :fiddle
     end
 
     let :last_added do
@@ -53,11 +53,12 @@ describe Fiddle::RelationsController do
 
     it { assigns[:relation].should == last_added }
     it { should redirect_to("/my/relations/#{last_added.to_param}") }
+    it { should permit_params(:name, :target, :predicate, :operator).for(:relation) } if Fiddle.strong_parameters?
   end
 
   describe "GET edit" do
     before do
-      get :edit, :id => relation.to_param, :use_route => :fiddle
+      get :edit, id: relation.to_param, use_route: :fiddle
     end
 
     it { assigns[:relation].should == relation }
@@ -67,16 +68,18 @@ describe Fiddle::RelationsController do
 
   describe "PUT update" do
     before do
-      put :update, :id => relation.to_param, :relation => {}, :use_route => :fiddle
+      put :update, id: relation.to_param, use_route: :fiddle,
+        relation: relation.attributes.slice('name', 'target', 'predicate', 'operator')
     end
 
     it { assigns[:relation].should == relation }
     it { should redirect_to("/my/relations/#{relation.to_param}") }
+    it { should permit_params(:name, :target, :predicate, :operator).for(:relation) } if Fiddle.strong_parameters?
   end
 
   describe "DELETE destroy" do
     before do
-      delete :destroy, :id => relation.to_param, :use_route => :fiddle
+      delete :destroy, id: relation.to_param, use_route: :fiddle
     end
 
     it { assigns[:relation].should == relation }
