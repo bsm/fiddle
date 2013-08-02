@@ -4,15 +4,15 @@ class Fiddle::Lookup < Fiddle::Base
   belongs_to :universe
 
   # ----> VALIDATIONS
-  validates_name_alias :scope => :universe_id
+  validates_name_alias scope: :universe_id
   validates :clause,
-    :presence => true,
-    :length   => { :maximum => 2000 }
+    presence: true,
+    length: { maximum: 2000 }
   validates :label_clause, :value_clause,
-    :presence => true,
-    :length   => { :maximum => 255 }
+    presence: true,
+    length: { maximum: 255 }
   validates :parent_value_clause,
-    :length   => { :maximum => 255 }
+    length: { maximum: 255 }
 
   # ----> INSTANCE METHODS
 

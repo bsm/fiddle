@@ -63,7 +63,9 @@ describe Fiddle::Operation do
 
     it 'should build SQL placeholder strings' do
       build("string", "123").where_sql.should be_a(Sequel::SQL::PlaceholderLiteralString)
-      build("string", "123").where_sql.to_s(fiddle_cubes(:stats).dataset).should == "table.field = '123'"
+      sql = ""
+      build("string", "123").where_sql.to_s_append(fiddle_cubes(:stats).dataset, sql)
+      sql.should == "table.field = '123'"
     end
 
     it 'should prevent invalid operation-type combinations' do
@@ -126,7 +128,9 @@ describe Fiddle::Operation do
     end
 
     it 'should build SQL placeholder strings' do
-      build("integer", "123..456").where_sql.to_s(fiddle_cubes(:stats).dataset).should == "table.field BETWEEN 123 AND 456"
+      sql = ""
+      build("integer", "123..456").where_sql.to_s_append(fiddle_cubes(:stats).dataset, sql)
+      sql.should == "table.field BETWEEN 123 AND 456"
     end
 
   end
@@ -209,7 +213,9 @@ describe Fiddle::Operation do
     end
 
     it 'should build SQL placeholder strings' do
-      build("string", "A|B").where_sql.to_s(fiddle_cubes(:stats).dataset).should == "table.field IN ('A', 'B')"
+      sql = ""
+      build("string", "A|B").where_sql.to_s_append(fiddle_cubes(:stats).dataset, sql)
+      sql.should == "table.field IN ('A', 'B')"
     end
 
   end

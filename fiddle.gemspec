@@ -16,9 +16,9 @@ Gem::Specification.new do |s|
   s.files       = Dir["{app,lib,config}/**/*"]
   s.test_files  = Dir["{spec}/**/*", "Rakefile", "Gemfile*"]
 
-  s.add_dependency "railties", ">= 4.0.0"
-  s.add_dependency "activerecord", ">= 4.0.0"
-  s.add_dependency "sequel", "3.45.0"
+  s.add_dependency "railties", ">= 3.1.0", "< 4.1.0"
+  s.add_dependency "activerecord", ">= 3.1.0", "< 4.1.0"
+  s.add_dependency "sequel", "~> 4.1.1"
   s.add_dependency "inherited_resources"
 
   s.add_development_dependency "rake"

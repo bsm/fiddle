@@ -5,11 +5,11 @@ class Fiddle::Constraint < Fiddle::Base
   belongs_to :projection
 
   # ---> VALIDATIONS
-  validates_name_alias :scope => [:cube_id, :operation_code]
-  validates :cube, :projection_id, :projection, :presence => true
+  validates_name_alias scope: [:cube_id, :operation_code]
+  validates :cube, :projection_id, :projection, presence: true
   validates :operation_code,
-    :presence   => true,
-    :inclusion  => { :in => Fiddle::Operation.registry.keys, :allow_blank => true }
+    presence:  true,
+    inclusion: { in: Fiddle::Operation.registry.keys, allow_blank: true }
   validate  :ensure_correct_operation_code
   validate  :ensure_projection_matches_cube
 

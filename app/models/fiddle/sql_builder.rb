@@ -45,7 +45,7 @@ class Fiddle::SQLBuilder
         from(lit(cube.from_sql)).
         group(*literalize(group.map(&:group_sql))).
         order(*literalize(order.map(&:to_s))).
-        clone :join => literalize(join.map(&:join_sql), " ")
+        clone join: literalize(join.map(&:join_sql), " ")
 
       where.each do |op|
         result = result.where(op.where_sql)

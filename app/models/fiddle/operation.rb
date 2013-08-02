@@ -36,7 +36,7 @@ class Fiddle::Operation
     end
 
     attr_reader :constraint, :value
-    delegate    :projection, :to => :constraint
+    delegate    :projection, to: :constraint
 
     # Constructor
     # @param [Class < Fiddle::DataType::Abstract] type

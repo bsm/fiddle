@@ -8,12 +8,12 @@ class Fiddle::Universe < ActiveRecord::Base
   self.stored_connections = {}
 
   # ---> ASSOCIATIONS
-  has_many :cubes, :dependent => :destroy
-  has_many :lookups, :dependent => :destroy
+  has_many :cubes, dependent: :destroy
+  has_many :lookups, dependent: :destroy
 
   # ---> VALIDATIONS
-  validates :name, :presence => true, :length => { :maximum => 40 }, :uniqueness => { :case_sensitive => false, :allow_blank => true }
-  validates :uri, :presence => true, :length => { :maximum => 255 }, :format => { :with => URI.regexp(schemes), :allow_blank => true }
+  validates :name, presence: true, length: { maximum: 40 }, uniqueness: { case_sensitive: false, allow_blank: true }
+  validates :uri, presence: true, length: { maximum: 255 }, format: { with: URI.regexp(schemes), allow_blank: true }
   validate  :ensure_connectable
 
   # ---> CALLBACKS
@@ -56,7 +56,7 @@ class Fiddle::Universe < ActiveRecord::Base
       begin
         establish_connection
       rescue ConnectionError => e
-        errors.add :uri, :not_connected, :reason => e.message
+        errors.add :uri, :not_connected, reason: e.message
       end
     end
 

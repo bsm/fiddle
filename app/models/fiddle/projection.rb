@@ -2,20 +2,20 @@ class Fiddle::Projection < Fiddle::Base
 
   # ---> ASSOCIATIONS
   belongs_to :cube
-  has_many :constraints, :dependent => :destroy
+  has_many :constraints, dependent: :destroy
 
   # ---> VALIDATIONS
-  validates_name_alias :scope => :cube_id
-  validates :cube, :presence => true
-  validates :description, :length => { :maximum => 80 }
+  validates_name_alias scope: :cube_id
+  validates :cube, presence: true
+  validates :description, length: { maximum: 80 }
   validates :clause,
-    :presence   => true,
-    :length     => { :maximum => 255 }
+    presence:  true,
+    length:    { maximum: 255 }
   validates :clause,
-    :length     => { :maximum => 255 }
+    length:    { maximum: 255 }
   validates :type_code,
-    :presence   => true,
-    :inclusion  => { :in => Fiddle::DataType.registry.keys, :allow_blank => true }
+    presence:  true,
+    inclusion: { in: Fiddle::DataType.registry.keys, allow_blank: true }
   validate  :ensure_references_match
 
   # @return [Fiddle::DataType] the assocaited data type
@@ -44,7 +44,7 @@ class Fiddle::Projection < Fiddle::Base
       return unless cube
 
       missing = references - cube.table_aliases
-      errors.add :clause, :invalid_reference, :missing => missing.to_sentence unless missing.empty?
+      errors.add :clause, :invalid_reference, missing: missing.to_sentence unless missing.empty?
     end
 
 end

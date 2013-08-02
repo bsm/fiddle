@@ -5,14 +5,14 @@ class Fiddle::Relation < Fiddle::Base
   belongs_to :cube
 
   # ---> VALIDATIONS
-  validates_name_alias :scope => :cube_id
-  validates :cube, :presence => true
+  validates_name_alias scope: :cube_id
+  validates :cube, presence: true
   validates :predicate, :target,
     :presence   => true,
-    :length     => { :maximum => 2000 }
+    :length     => { maximum: 2000 }
   validates :operator,
     :presence   => true,
-    :inclusion  => { :in => OPERATORS, :allow_blank => true }
+    :inclusion  => { in: OPERATORS, allow_blank: true }
   validate  :ensure_name_is_not_clashing_with_cube
 
   # @return [String] the full join SQL clause

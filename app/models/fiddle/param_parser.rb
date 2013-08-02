@@ -31,7 +31,7 @@ class Fiddle::ParamParser
     @dimensions = parse_collection parent.dimensions, options[:by]
 
     @orders     = parse_orders(options[:order])
-    @limit      = parse_integer(options[:limit], options[:per_page], :default => 100)
+    @limit      = parse_integer(options[:limit], options[:per_page], default: 100)
     @offset     = parse_integer(options[:offset], page_offset(options[:page]))
     @operations = parse_operations(options[:where])
   end
