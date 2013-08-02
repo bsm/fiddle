@@ -16,7 +16,7 @@ describe Fiddle::MeasuresController do
       get :index, :cube_id => cube.to_param, :use_route => :fiddle
     end
 
-    it { should assign_to(:measures).with([measure]) }
+    it { assigns[:measures].should == [measure] }
     it { should respond_with(:success) }
     it { should render_template(:index) }
   end
@@ -26,7 +26,7 @@ describe Fiddle::MeasuresController do
       get :show, :id => measure.to_param, :use_route => :fiddle
     end
 
-    it { should assign_to(:measure).with(measure) }
+    it { assigns[:measure].should == measure }
     it { should respond_with(:success) }
     it { should render_template(:show) }
   end
@@ -36,7 +36,7 @@ describe Fiddle::MeasuresController do
       get :new, :cube_id => cube.to_param, :use_route => :fiddle
     end
 
-    it { should assign_to(:measure) }
+    it { assigns[:measure].should be_present }
     it { should respond_with(:success) }
     it { should render_template(:new) }
   end
@@ -51,7 +51,7 @@ describe Fiddle::MeasuresController do
       Fiddle::Measure.order(:id).last
     end
 
-    it { should assign_to(:measure).with(last_added) }
+    it { assigns[:measure].should == last_added }
     it { should redirect_to("/my/measures/#{last_added.to_param}") }
   end
 
@@ -60,7 +60,7 @@ describe Fiddle::MeasuresController do
       get :edit, :id => measure.to_param, :use_route => :fiddle
     end
 
-    it { should assign_to(:measure).with(measure) }
+    it { assigns[:measure].should == measure }
     it { should respond_with(:success) }
     it { should render_template(:edit) }
   end
@@ -70,7 +70,7 @@ describe Fiddle::MeasuresController do
       put :update, :id => measure.to_param, :measure => {}, :use_route => :fiddle
     end
 
-    it { should assign_to(:measure).with(measure) }
+    it { assigns[:measure].should == measure }
     it { should redirect_to("/my/measures/#{measure.to_param}") }
   end
 
@@ -79,7 +79,7 @@ describe Fiddle::MeasuresController do
       delete :destroy, :id => measure.to_param, :use_route => :fiddle
     end
 
-    it { should assign_to(:measure).with(measure) }
+    it { assigns[:measure].should == measure }
     it { should redirect_to("/my/cubes/#{cube.to_param}/measures") }
   end
 

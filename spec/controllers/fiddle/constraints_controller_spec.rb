@@ -16,7 +16,7 @@ describe Fiddle::ConstraintsController do
       get :index, :cube_id => cube.to_param, :use_route => :fiddle
     end
 
-    it { should assign_to(:constraints).with([constraint]) }
+    it { assigns[:constraints].should == [constraint] }
     it { should respond_with(:success) }
     it { should render_template(:index) }
   end
@@ -26,7 +26,7 @@ describe Fiddle::ConstraintsController do
       get :show, :id => constraint.to_param, :use_route => :fiddle
     end
 
-    it { should assign_to(:constraint).with(constraint) }
+    it { assigns[:constraint].should == constraint }
     it { should respond_with(:success) }
     it { should render_template(:show) }
   end
@@ -36,7 +36,7 @@ describe Fiddle::ConstraintsController do
       get :new, :cube_id => cube.to_param, :use_route => :fiddle
     end
 
-    it { should assign_to(:constraint) }
+    it { assigns[:constraint].should be_present }
     it { should respond_with(:success) }
     it { should render_template(:new) }
   end
@@ -51,7 +51,7 @@ describe Fiddle::ConstraintsController do
       Fiddle::Constraint.order(:id).last
     end
 
-    it { should assign_to(:constraint).with(last_added) }
+    it { assigns[:constraint].should == last_added }
     it { should redirect_to("/my/constraints/#{last_added.to_param}") }
   end
 
@@ -60,7 +60,7 @@ describe Fiddle::ConstraintsController do
       get :edit, :id => constraint.to_param, :use_route => :fiddle
     end
 
-    it { should assign_to(:constraint).with(constraint) }
+    it { assigns[:constraint].should == constraint }
     it { should respond_with(:success) }
     it { should render_template(:edit) }
   end
@@ -70,7 +70,7 @@ describe Fiddle::ConstraintsController do
       put :update, :id => constraint.to_param, :constraint => {}, :use_route => :fiddle
     end
 
-    it { should assign_to(:constraint).with(constraint) }
+    it { assigns[:constraint].should == constraint }
     it { should redirect_to("/my/constraints/#{constraint.to_param}") }
   end
 
@@ -79,7 +79,7 @@ describe Fiddle::ConstraintsController do
       delete :destroy, :id => constraint.to_param, :use_route => :fiddle
     end
 
-    it { should assign_to(:constraint).with(constraint) }
+    it { assigns[:constraint].should == constraint }
     it { should redirect_to("/my/cubes/#{cube.to_param}/constraints") }
   end
 

@@ -16,7 +16,7 @@ describe Fiddle::DimensionsController do
       get :index, :cube_id => cube.to_param, :use_route => :fiddle
     end
 
-    it { should assign_to(:dimensions).with([dimension]) }
+    it { assigns[:dimensions].should == [dimension] }
     it { should respond_with(:success) }
     it { should render_template(:index) }
   end
@@ -26,7 +26,7 @@ describe Fiddle::DimensionsController do
       get :show, :id => dimension.to_param, :use_route => :fiddle
     end
 
-    it { should assign_to(:dimension).with(dimension) }
+    it { assigns[:dimension].should == dimension }
     it { should respond_with(:success) }
     it { should render_template(:show) }
   end
@@ -36,7 +36,7 @@ describe Fiddle::DimensionsController do
       get :new, :cube_id => cube.to_param, :use_route => :fiddle
     end
 
-    it { should assign_to(:dimension) }
+    it { assigns[:dimension].should be_present }
     it { should respond_with(:success) }
     it { should render_template(:new) }
   end
@@ -51,7 +51,7 @@ describe Fiddle::DimensionsController do
       Fiddle::Dimension.order(:id).last
     end
 
-    it { should assign_to(:dimension).with(last_added) }
+    it { assigns[:dimension].should == last_added }
     it { should redirect_to("/my/dimensions/#{last_added.to_param}") }
   end
 
@@ -60,7 +60,7 @@ describe Fiddle::DimensionsController do
       get :edit, :id => dimension.to_param, :use_route => :fiddle
     end
 
-    it { should assign_to(:dimension).with(dimension) }
+    it { assigns[:dimension].should == dimension }
     it { should respond_with(:success) }
     it { should render_template(:edit) }
   end
@@ -70,7 +70,7 @@ describe Fiddle::DimensionsController do
       put :update, :id => dimension.to_param, :dimension => {}, :use_route => :fiddle
     end
 
-    it { should assign_to(:dimension).with(dimension) }
+    it { assigns[:dimension].should == dimension }
     it { should redirect_to("/my/dimensions/#{dimension.to_param}") }
   end
 
@@ -79,7 +79,7 @@ describe Fiddle::DimensionsController do
       delete :destroy, :id => dimension.to_param, :use_route => :fiddle
     end
 
-    it { should assign_to(:dimension).with(dimension) }
+    it { assigns[:dimension].should == dimension }
     it { should redirect_to("/my/cubes/#{cube.to_param}/dimensions") }
   end
 

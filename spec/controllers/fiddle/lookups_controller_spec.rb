@@ -16,7 +16,7 @@ describe Fiddle::LookupsController do
       get :index, :universe_id => universe.to_param, :use_route => :fiddle
     end
 
-    it { should assign_to(:lookups).with([lookup]) }
+    it { assigns[:lookups].should == [lookup] }
     it { should respond_with(:success) }
     it { should render_template(:index) }
   end
@@ -26,7 +26,7 @@ describe Fiddle::LookupsController do
       get :show, :id => lookup.to_param, :use_route => :fiddle
     end
 
-    it { should assign_to(:lookup).with(lookup) }
+    it { assigns[:lookup].should == lookup }
     it { should respond_with(:success) }
     it { should render_template(:show) }
   end
@@ -36,7 +36,7 @@ describe Fiddle::LookupsController do
       get :new, :universe_id => universe.to_param, :use_route => :fiddle
     end
 
-    it { should assign_to(:lookup) }
+    it { assigns[:lookup].should be_present }
     it { should respond_with(:success) }
     it { should render_template(:new) }
   end
@@ -51,7 +51,7 @@ describe Fiddle::LookupsController do
       Fiddle::Lookup.order(:id).last
     end
 
-    it { should assign_to(:lookup).with(last_added) }
+    it { assigns[:lookup].should == last_added }
     it { should redirect_to("/my/lookups/#{last_added.to_param}") }
   end
 
@@ -60,7 +60,7 @@ describe Fiddle::LookupsController do
       get :edit, :id => lookup.to_param, :use_route => :fiddle
     end
 
-    it { should assign_to(:lookup).with(lookup) }
+    it { assigns[:lookup].should == lookup }
     it { should respond_with(:success) }
     it { should render_template(:edit) }
   end
@@ -70,7 +70,7 @@ describe Fiddle::LookupsController do
       put :update, :id => lookup.to_param, :lookup => {}, :use_route => :fiddle
     end
 
-    it { should assign_to(:lookup).with(lookup) }
+    it { assigns[:lookup].should == lookup }
     it { should redirect_to("/my/lookups/#{lookup.to_param}") }
   end
 
@@ -79,7 +79,7 @@ describe Fiddle::LookupsController do
       delete :destroy, :id => lookup.to_param, :use_route => :fiddle
     end
 
-    it { should assign_to(:lookup).with(lookup) }
+    it { assigns[:lookup].should == lookup }
     it { should redirect_to("/my/universes/#{universe.to_param}/lookups") }
   end
 

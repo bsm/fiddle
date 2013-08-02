@@ -13,10 +13,10 @@ describe Fiddle::Constraint do
   it { should ensure_length_of(:name).is_at_most(30) }
   it { should validate_uniqueness_of(:name).case_insensitive.scoped_to([:cube_id, :operation_code]) }
   ["example", "an_example", "_example"].each do |value|
-    it { should validate_format_of(:name).with(value) }
+    it { should allow_value(value).for(:name) }
   end
   ["An example", "1Up", "1up", "hi5"].each do |value|
-    it { should_not validate_format_of(:name).with(value) }
+    it { should_not allow_value(value).for(:name) }
   end
 
   it { should validate_presence_of(:operation_code) }
@@ -25,13 +25,6 @@ describe Fiddle::Constraint do
   end
   ["bogus", "monkey"].each do |value|
     it { should_not allow_value(value).for(:operation_code) }
-  end
-
-  [:name, :projection_id, :operation_code].each do |attribute|
-    it { should allow_mass_assignment_of(attribute) }
-  end
-  [:cube_id].each do |attribute|
-    it { should_not allow_mass_assignment_of(attribute) }
   end
 
   it 'should ensure operation code matches the projection data type' do

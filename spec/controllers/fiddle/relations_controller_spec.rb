@@ -16,7 +16,7 @@ describe Fiddle::RelationsController do
       get :index, :cube_id => cube.to_param, :use_route => :fiddle
     end
 
-    it { should assign_to(:relations).with([relation]) }
+    it { assigns[:relations].should == [relation] }
     it { should respond_with(:success) }
     it { should render_template(:index) }
   end
@@ -26,7 +26,7 @@ describe Fiddle::RelationsController do
       get :show, :id => relation.to_param, :use_route => :fiddle
     end
 
-    it { should assign_to(:relation).with(relation) }
+    it { assigns[:relation].should == relation }
     it { should respond_with(:success) }
     it { should render_template(:show) }
   end
@@ -36,7 +36,7 @@ describe Fiddle::RelationsController do
       get :new, :cube_id => cube.to_param, :use_route => :fiddle
     end
 
-    it { should assign_to(:relation) }
+    it { assigns[:relation].should be_present }
     it { should respond_with(:success) }
     it { should render_template(:new) }
   end
@@ -51,7 +51,7 @@ describe Fiddle::RelationsController do
       Fiddle::Relation.order(:id).last
     end
 
-    it { should assign_to(:relation).with(last_added) }
+    it { assigns[:relation].should == last_added }
     it { should redirect_to("/my/relations/#{last_added.to_param}") }
   end
 
@@ -60,7 +60,7 @@ describe Fiddle::RelationsController do
       get :edit, :id => relation.to_param, :use_route => :fiddle
     end
 
-    it { should assign_to(:relation).with(relation) }
+    it { assigns[:relation].should == relation }
     it { should respond_with(:success) }
     it { should render_template(:edit) }
   end
@@ -70,7 +70,7 @@ describe Fiddle::RelationsController do
       put :update, :id => relation.to_param, :relation => {}, :use_route => :fiddle
     end
 
-    it { should assign_to(:relation).with(relation) }
+    it { assigns[:relation].should == relation }
     it { should redirect_to("/my/relations/#{relation.to_param}") }
   end
 
@@ -79,7 +79,7 @@ describe Fiddle::RelationsController do
       delete :destroy, :id => relation.to_param, :use_route => :fiddle
     end
 
-    it { should assign_to(:relation).with(relation) }
+    it { assigns[:relation].should == relation }
     it { should redirect_to("/my/cubes/#{cube.to_param}/relations") }
   end
 

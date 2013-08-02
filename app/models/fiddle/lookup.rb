@@ -14,9 +14,6 @@ class Fiddle::Lookup < Fiddle::Base
   validates :parent_value_clause,
     :length   => { :maximum => 255 }
 
-  # ----> ATTRIBUTES
-  attr_accessible :name, :clause, :label_clause, :value_clause, :parent_value_clause
-
   # ----> INSTANCE METHODS
 
   # @return [Sequel::LiteralString] the SELECT SQL clause

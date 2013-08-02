@@ -14,17 +14,10 @@ describe Fiddle::Universe do
   it { should ensure_length_of(:uri).is_at_most(255) }
 
   ["postgres://user:pass@localhost:5432/db_name?key=value", "sqlite::memory:"].each do |value|
-    it { should validate_format_of(:uri).with(value) }
+    it { should allow_value(value).for(:uri) }
   end
   ["not-an-URI", "localhost"].each do |value|
-    it { should_not validate_format_of(:uri).with(value) }
-  end
-
-  [:name, :uri].each do |attribute|
-    it { should allow_mass_assignment_of(attribute) }
-  end
-  [:created_at].each do |attribute|
-    it { should_not allow_mass_assignment_of(attribute) }
+    it { should_not allow_value(value).for(:uri) }
   end
 
   it 'should fail if URI is not connectable' do

@@ -16,7 +16,7 @@ describe Fiddle::CubesController do
       get :index, :universe_id => universe.to_param, :use_route => :fiddle
     end
 
-    it { should assign_to(:cubes).with([cube]) }
+    it { assigns[:cubes].should == [cube] }
     it { should respond_with(:success) }
     it { should render_template(:index) }
   end
@@ -26,7 +26,7 @@ describe Fiddle::CubesController do
       get :show, :id => cube.to_param, :use_route => :fiddle
     end
 
-    it { should assign_to(:cube).with(cube) }
+    it { assigns[:cube].should == cube }
     it { should respond_with(:success) }
     it { should render_template(:show) }
   end
@@ -36,7 +36,7 @@ describe Fiddle::CubesController do
       get :new, :universe_id => universe.to_param, :use_route => :fiddle
     end
 
-    it { should assign_to(:cube) }
+    it { assigns[:cube].should be_present }
     it { should respond_with(:success) }
     it { should render_template(:new) }
   end
@@ -50,7 +50,7 @@ describe Fiddle::CubesController do
       Fiddle::Cube.order(:id).last
     end
 
-    it { should assign_to(:cube).with(last_added) }
+    it { assigns[:cube].should == last_added }
     it { should redirect_to("/my/cubes/#{last_added.to_param}") }
   end
 
@@ -59,7 +59,7 @@ describe Fiddle::CubesController do
       get :edit, :id => cube.to_param, :use_route => :fiddle
     end
 
-    it { should assign_to(:cube).with(cube) }
+    it { assigns[:cube].should == cube }
     it { should respond_with(:success) }
     it { should render_template(:edit) }
   end
@@ -69,7 +69,7 @@ describe Fiddle::CubesController do
       put :update, :id => cube.to_param, :cube => {}, :use_route => :fiddle
     end
 
-    it { should assign_to(:cube).with(cube) }
+    it { assigns[:cube].should == cube }
     it { should redirect_to("/my/cubes/#{cube.to_param}") }
   end
 
@@ -78,7 +78,7 @@ describe Fiddle::CubesController do
       delete :destroy, :id => cube.to_param, :use_route => :fiddle
     end
 
-    it { should assign_to(:cube).with(cube) }
+    it { assigns[:cube].should == cube }
     it { should redirect_to("/my/universes/#{universe.to_param}/cubes") }
   end
 

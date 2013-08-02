@@ -58,7 +58,7 @@ describe Fiddle::Operation do
 
       build("string", nil).should_not be_valid
       build("integer", "ABC").should_not be_valid
-      build("date", "January").should_not be_valid
+      build("date", "waffle").should_not be_valid
     end
 
     it 'should build SQL placeholder strings' do

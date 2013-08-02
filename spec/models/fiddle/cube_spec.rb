@@ -15,20 +15,13 @@ describe Fiddle::Cube do
   it { should ensure_length_of(:name).is_at_most(30) }
   it { should validate_uniqueness_of(:name).case_insensitive.scoped_to(:universe_id) }
   ["example", "an_example", "_example"].each do |value|
-    it { should validate_format_of(:name).with(value) }
+    it { should allow_value(value).for(:name) }
   end
   ["An example", "1Up", "1up", "hi5"].each do |value|
-    it { should_not validate_format_of(:name).with(value) }
+    it { should_not allow_value(value).for(:name) }
   end
   it { should validate_presence_of(:clause) }
   it { should ensure_length_of(:clause).is_at_most(2000) }
-
-  [:name, :clause].each do |attribute|
-    it { should allow_mass_assignment_of(attribute) }
-  end
-  [:universe_id].each do |attribute|
-    it { should_not allow_mass_assignment_of(attribute) }
-  end
 
   it 'should retrieve table aliases' do
     fiddle_cubes(:stats).table_aliases.should == ['stats', 'websites']

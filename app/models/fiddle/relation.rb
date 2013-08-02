@@ -15,9 +15,6 @@ class Fiddle::Relation < Fiddle::Base
     :inclusion  => { :in => OPERATORS, :allow_blank => true }
   validate  :ensure_name_is_not_clashing_with_cube
 
-  # ---> ATTRIBUTES
-  attr_accessible :name, :target, :predicate, :operator
-
   # @return [String] the full join SQL clause
   def join_sql
     return "" unless [operator, target, name, predicate].all?(&:present?)

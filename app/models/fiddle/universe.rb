@@ -20,9 +20,6 @@ class Fiddle::Universe < ActiveRecord::Base
   before_save    :remove_stored_connection
   before_destroy :remove_stored_connection
 
-  # ---> ATTRIBUTES
-  attr_accessible :name, :uri
-
   def conn(reconnect = false)
     remove_stored_connection if reconnect
     stored_connections[id] ||= establish_connection

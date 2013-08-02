@@ -7,5 +7,6 @@ require "fiddle"
 module Dummy
   class Application < Rails::Application
     config.encoding = "utf-8"
+    config.eager_load = false
   end
 end

@@ -18,9 +18,6 @@ class Fiddle::Projection < Fiddle::Base
     :inclusion  => { :in => Fiddle::DataType.registry.keys, :allow_blank => true }
   validate  :ensure_references_match
 
-  # ---> ATTRIBUTES
-  attr_accessible :name, :description, :clause, :sortable, :type_code
-
   # @return [Fiddle::DataType] the assocaited data type
   def type_class
     Fiddle::DataType.registry[type_code]

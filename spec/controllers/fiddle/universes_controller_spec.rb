@@ -12,7 +12,7 @@ describe Fiddle::UniversesController do
       get :index, :use_route => :fiddle
     end
 
-    it { should assign_to(:universes).with([universe]) }
+    it { assigns[:universes].should == [universe] }
     it { should respond_with(:success) }
     it { should render_template(:index) }
 
@@ -28,7 +28,7 @@ describe Fiddle::UniversesController do
       get :show, :id => universe.to_param, :use_route => :fiddle
     end
 
-    it { should assign_to(:universe).with(universe) }
+    it { assigns[:universe].should == universe }
     it { should respond_with(:success) }
     it { should render_template(:show) }
   end
@@ -38,7 +38,7 @@ describe Fiddle::UniversesController do
       get :new, :use_route => :fiddle
     end
 
-    it { should assign_to(:universe) }
+    it { assigns[:universe].should be_present }
     it { should respond_with(:success) }
     it { should render_template(:new) }
   end
@@ -52,7 +52,7 @@ describe Fiddle::UniversesController do
       Fiddle::Universe.order(:id).last
     end
 
-    it { should assign_to(:universe).with(last_added) }
+    it { assigns[:universe].should == last_added }
     it { should redirect_to("/my/universes/#{last_added.to_param}") }
   end
 
@@ -61,7 +61,7 @@ describe Fiddle::UniversesController do
       get :edit, :id => universe.to_param, :use_route => :fiddle
     end
 
-    it { should assign_to(:universe).with(universe) }
+    it { assigns[:universe].should == universe }
     it { should respond_with(:success) }
     it { should render_template(:edit) }
   end
@@ -71,7 +71,7 @@ describe Fiddle::UniversesController do
       put :update, :id => universe.to_param, :universe => {}, :use_route => :fiddle
     end
 
-    it { should assign_to(:universe).with(universe) }
+    it { assigns[:universe].should == universe }
     it { should redirect_to("/my/universes/#{universe.to_param}") }
   end
 
@@ -80,7 +80,7 @@ describe Fiddle::UniversesController do
       delete :destroy, :id => universe.to_param, :use_route => :fiddle
     end
 
-    it { should assign_to(:universe).with(universe) }
+    it { assigns[:universe].should == universe }
     it { should redirect_to("/my/universes") }
   end
 
