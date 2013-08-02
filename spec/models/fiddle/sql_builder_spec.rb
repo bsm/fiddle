@@ -45,10 +45,15 @@ describe Fiddle::SQLBuilder do
     opts[:order].should =~ ["page_views DESC"]
     opts[:limit].should == 100
     opts[:offset].should == 0
+    sql = ""
     opts[:where].should be_a(Sequel::SQL::PlaceholderLiteralString)
-    opts[:where].to_s(subject.dataset).should == "websites.name = 'my'"
+    opts[:where].to_s_append(subject.dataset, sql)
+    sql.should == "websites.name = 'my'"
+
+    sql = ""
     opts[:having].should be_a(Sequel::SQL::PlaceholderLiteralString)
-    opts[:having].to_s(subject.dataset).should == "SUM(stats.page_views) > 1000"
+    opts[:having].to_s_append(subject.dataset, sql)
+    sql.should == "SUM(stats.page_views) > 1000"
   end
 
   it "should construct SQL statements" do
