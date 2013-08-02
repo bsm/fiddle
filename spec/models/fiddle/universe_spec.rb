@@ -21,7 +21,7 @@ describe Fiddle::Universe do
   end
 
   it 'should fail if URI is not connectable' do
-    subject.uri = "postgres://user:pass@127.0.0.1:22/db_name?key=value"
+    subject.uri = "postgres://user:pass@127.0.0.1:52229/db_name?key=value"
     subject.should have(1).error_on(:uri)
     subject.errors[:uri].first.should include("cannot be connected. Could not connect to server")
   end
