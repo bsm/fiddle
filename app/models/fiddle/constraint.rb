@@ -13,6 +13,9 @@ class Fiddle::Constraint < Fiddle::Base
   validate  :ensure_correct_operation_code
   validate  :ensure_projection_matches_cube
 
+  # ---> ATTRIBUTES
+  attr_accessible :name, :projection_id, :operation_code if Fiddle.protected_attributes?
+
   # @return [Class] the operation class
   def operation_class
     Fiddle::Operation.registry[operation_code]

@@ -17,6 +17,9 @@ class Fiddle::Cube < Fiddle::Base
     presence: true,
     length:   { maximum: 2000 }
 
+  # ---> ATTRIBUTES
+  attr_accessible :name, :clause if Fiddle.protected_attributes?
+
   # @return [Array] list of table aliases used inside this cube
   def table_aliases
     @table_aliases ||= [name] + relations.select(:name).map(&:name)

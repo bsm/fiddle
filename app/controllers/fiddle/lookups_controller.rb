@@ -5,5 +5,5 @@ class Fiddle::LookupsController < Fiddle::BaseController
 
   def permitted_params
     params.permit lookup: [:name, :clause, :label_clause, :value_clause, :parent_value_clause]
-  end
+  end if Fiddle.strong_parameters?
 end

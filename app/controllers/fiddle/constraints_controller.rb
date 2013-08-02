@@ -5,5 +5,5 @@ class Fiddle::ConstraintsController < Fiddle::BaseController
 
   def permitted_params
     params.permit constraint: [:name, :projection_id, :operation_code]
-  end
+  end if Fiddle.strong_parameters?
 end

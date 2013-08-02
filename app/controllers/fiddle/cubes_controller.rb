@@ -5,5 +5,5 @@ class Fiddle::CubesController < Fiddle::BaseController
 
   def permitted_params
     params.permit cube: [:name, :clause]
-  end
+  end if Fiddle.strong_parameters?
 end

@@ -4,5 +4,5 @@ class Fiddle::UniversesController < Fiddle::BaseController
 
   def permitted_params
     params.permit universe: [:name, :uri]
-  end
+  end if Fiddle.strong_parameters?
 end

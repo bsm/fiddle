@@ -18,4 +18,13 @@ module Fiddle
     return [] if string.blank?
     string.scan(/\W?(#{PATTERN})\W?\./).flatten.uniq
   end
+
+  def self.protected_attributes?
+    ActiveRecord::VERSION::MAJOR < 4 || defined?(ProtectedAttributes)
+  end
+
+  def self.strong_parameters?
+    ActiveRecord::VERSION::MAJOR > 3 || defined?(StrongParameters)
+  end
+
 end

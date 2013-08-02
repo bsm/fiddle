@@ -5,5 +5,5 @@ class Fiddle::DimensionsController < Fiddle::BaseController
 
   def permitted_params
     params.permit dimension: [:name, :description, :clause, :sortable, :type_code, :visible]
-  end
+  end if Fiddle.strong_parameters?
 end

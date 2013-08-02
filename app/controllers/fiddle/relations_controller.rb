@@ -5,5 +5,5 @@ class Fiddle::RelationsController < Fiddle::BaseController
 
   def permitted_params
     params.permit relation: [:name, :target, :predicate, :operator]
-  end
+  end if Fiddle.strong_parameters?
 end

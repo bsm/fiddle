@@ -5,5 +5,5 @@ class Fiddle::MeasuresController < Fiddle::BaseController
 
   def permitted_params
     params.permit measure: [:name, :description, :clause, :sortable, :type_code]
-  end
+  end if Fiddle.strong_parameters?
 end
