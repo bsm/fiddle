@@ -27,6 +27,16 @@ describe Fiddle::Constraint do
     it { should_not allow_value(value).for(:operation_code) }
   end
 
+  if Fiddle.protected_attributes?
+    [:name, :projection_id, :operation_code].each do |attribute|
+      it { should allow_mass_assignment_of(attribute) }
+    end
+
+    [:cube_id].each do |attribute|
+      it { should_not allow_mass_assignment_of(attribute) }
+    end
+  end
+
   it 'should ensure operation code matches the projection data type' do
     fiddle_constraints(:website__eq).operation_code = "gt"
     fiddle_constraints(:website__eq).should have(1).error_on(:operation_code)

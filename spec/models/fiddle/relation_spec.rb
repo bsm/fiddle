@@ -32,6 +32,16 @@ describe Fiddle::Relation do
     subject.should have(1).error_on(:name)
   end
 
+  if Fiddle.protected_attributes?
+    [:name, :operator, :target, :predicate].each do |attribute|
+      it { should allow_mass_assignment_of(attribute) }
+    end
+
+    [:cube_id].each do |attribute|
+      it { should_not allow_mass_assignment_of(attribute) }
+    end
+  end
+
   it 'should build SQL' do
     subject.join_sql.should == ""
     fiddle_relations(:websites).join_sql.should == "LEFT OUTER JOIN dim_websites AS websites ON websites.id = stats.website_id"

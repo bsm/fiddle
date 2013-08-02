@@ -23,6 +23,16 @@ describe Fiddle::Cube do
   it { should validate_presence_of(:clause) }
   it { should ensure_length_of(:clause).is_at_most(2000) }
 
+  if Fiddle.protected_attributes?
+    [:name, :clause].each do |attribute|
+      it { should allow_mass_assignment_of(attribute) }
+    end
+
+    [:universe_id].each do |attribute|
+      it { should_not allow_mass_assignment_of(attribute) }
+    end
+  end
+
   it 'should retrieve table aliases' do
     fiddle_cubes(:stats).table_aliases.should == ['stats', 'websites']
   end

@@ -20,6 +20,16 @@ describe Fiddle::Universe do
     it { should_not allow_value(value).for(:uri) }
   end
 
+  if Fiddle.protected_attributes?
+    [:name, :uri].each do |attribute|
+      it { should allow_mass_assignment_of(attribute) }
+    end
+
+    [:created_at].each do |attribute|
+      it { should_not allow_mass_assignment_of(attribute) }
+    end
+  end
+
   it 'should fail if URI is not connectable' do
     subject.uri = "postgres://user:pass@127.0.0.1:52229/db_name?key=value"
     subject.should have(1).error_on(:uri)

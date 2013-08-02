@@ -49,6 +49,18 @@ describe Fiddle::Lookup do
   it { should_not validate_presence_of(:parent_value_clause) }
   it { should ensure_length_of(:parent_value_clause).is_at_most(255) }
 
+  # ----> ATTRIBUTES
+
+  if Fiddle.protected_attributes?
+    [:name, :clause, :label_clause, :value_clause, :parent_value_clause].each do |attribute|
+      it { should allow_mass_assignment_of(attribute) }
+    end
+
+    [:universe_id].each do |attribute|
+      it { should_not allow_mass_assignment_of(attribute) }
+    end
+  end
+
   # ----> INSTANCE METHODS
 
   it 'should build select sql' do
