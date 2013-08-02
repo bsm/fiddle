@@ -1,6 +1,9 @@
 en:
 
   activerecord:
+    attributes:
+      fiddle/universe:
+        uri: "URI"
     errors:
       models:
         fiddle/universe:

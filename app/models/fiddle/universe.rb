@@ -31,7 +31,7 @@ class Fiddle::Universe < ActiveRecord::Base
   rescue Sequel::AdapterNotFound
     raise ConnectionError.new("No such adapter '#{adapter}'")
   rescue Sequel::DatabaseConnectionError => e
-    raise ConnectionError.new(e.message)
+    raise ConnectionError.new e.message.sub(/^[\w:]+ /, '').gsub(/\s+/, " ").capitalize
   end
 
   def adapter
@@ -39,7 +39,7 @@ class Fiddle::Universe < ActiveRecord::Base
   end
 
   def valid_uri?
-    uri.to_s =~ URI.regexp(schemes)
+    !!(uri.to_s =~ URI.regexp(schemes))
   end
 
   private
@@ -53,11 +53,9 @@ class Fiddle::Universe < ActiveRecord::Base
 
     def ensure_connectable
       return if uri.blank?
-      begin
-        establish_connection
-      rescue ConnectionError => e
-        errors.add :uri, :not_connected, reason: e.message
-      end
+      establish_connection
+    rescue ConnectionError => e
+      errors.add :uri, :not_connected, reason: e.message
     end
 
 end

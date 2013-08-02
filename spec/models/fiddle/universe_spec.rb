@@ -13,7 +13,7 @@ describe Fiddle::Universe do
   it { should validate_presence_of(:uri) }
   it { should ensure_length_of(:uri).is_at_most(255) }
 
-  ["postgres://user:pass@localhost:5432/db_name?key=value", "sqlite::memory:"].each do |value|
+  ["sqlite::memory:"].each do |value|
     it { should allow_value(value).for(:uri) }
   end
   ["not-an-URI", "localhost"].each do |value|
@@ -23,7 +23,7 @@ describe Fiddle::Universe do
   it 'should fail if URI is not connectable' do
     subject.uri = "postgres://user:pass@127.0.0.1:22/db_name?key=value"
     subject.should have(1).error_on(:uri)
-    subject.errors[:uri].first.should include("cannot be connected")
+    subject.errors[:uri].first.should include("cannot be connected. Could not connect to server")
   end
 
   it 'should fail adapter is unavailable' do
