@@ -30,7 +30,7 @@ class Fiddle::Universe < ActiveRecord::Base
 
   def establish_connection
     return unless valid_uri?
-    Sequel.connect(uri).tap(&:tables)
+    Sequel.connect(uri, max_connection: Fiddle.max_connections).tap(&:tables)
   rescue Sequel::AdapterNotFound
     raise ConnectionError.new("No such adapter '#{adapter}'")
   rescue Sequel::DatabaseConnectionError => e

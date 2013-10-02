@@ -10,6 +10,9 @@ module Fiddle
   PATTERN = "[a-z_]+"
   REGEXP  = /\A#{PATTERN}\z/
 
+  mattr_accessor :max_connections
+  @@max_connections = 4
+
   class Engine < Rails::Engine
     isolate_namespace Fiddle
   end
@@ -25,6 +28,10 @@ module Fiddle
 
   def self.strong_parameters?
     ActiveRecord::VERSION::MAJOR > 3 || defined?(StrongParameters)
+  end
+
+  def self.configure(&block)
+    tap(&block)
   end
 
 end
