@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.name        = "fiddle"
   s.summary     = "Fiddle"
   s.description = "Rails Engine for constructing universes"
-  s.version     = "0.4.0"
+  s.version     = "0.4.1"
 
   s.authors     = ["Dimitrij Denissenko"]
   s.email       = "dimitrij@blacksquaremedia.com"
