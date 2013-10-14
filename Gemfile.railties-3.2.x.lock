@@ -1,11 +1,11 @@
 PATH
   remote: .
   specs:
-    fiddle (0.4.1)
+    fiddle (0.5.0)
       activerecord (>= 3.1.0, < 4.1.0)
       inherited_resources
       railties (>= 3.1.0, < 4.1.0)
-      sequel (~> 4.1.1)
+      sequel (~> 4.3.0)
 
 GEM
   remote: http://rubygems.org/
@@ -83,7 +83,7 @@ GEM
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
       rspec-mocks (~> 2.14.0)
-    sequel (4.1.1)
+    sequel (4.3.0)
     shoulda-matchers (2.4.0)
       activesupport (>= 3.0.0)
     sprockets (2.2.2)
