@@ -1,3 +1,5 @@
+require 'set'
+
 class Fiddle::ParamParser
   include Fiddle::Utils
 
@@ -90,7 +92,7 @@ class Fiddle::ParamParser
 
     # @return [Array] parsed collection
     def parse_collection(collection, value, options = {})
-      names = normalize_array(value)
+      names = normalize_array(value).to_set
       collection.to_a.select {|i| names.include?(i.name) }
     end
 

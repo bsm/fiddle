@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency "railties", ">= 3.1.0", "< 4.1.0"
   s.add_dependency "activerecord", ">= 3.1.0", "< 4.1.0"
-  s.add_dependency "sequel", "~> 4.3.0"
+  s.add_dependency "sequel", ">= 4.4.0", "< 5.0.0"
   s.add_dependency "inherited_resources"
 
   s.add_development_dependency "rake"

@@ -2,8 +2,6 @@ require 'bundler/setup'
 require 'rails/engine'
 require 'active_record/railtie'
 require 'inherited_resources'
-
-SEQUEL_NO_CORE_EXTENSIONS = true
 require 'sequel/core'
 
 module Fiddle
