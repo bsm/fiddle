@@ -9,7 +9,7 @@ describe Fiddle::Operation do
 
   def constraint(code)
     c = Fiddle::Constraint.new
-    c.projection = Fiddle::Projection.new :type_code => code, :clause => "table.field"
+    c.projection = Fiddle::Projection.new type_code: code, clause: "table.field"
     c
   end
 

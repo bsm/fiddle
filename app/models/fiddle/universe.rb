@@ -12,8 +12,14 @@ class Fiddle::Universe < ActiveRecord::Base
   has_many :lookups, dependent: :destroy
 
   # ---> VALIDATIONS
-  validates :name, presence: true, length: { maximum: 40 }, uniqueness: { case_sensitive: false, allow_blank: true }
-  validates :uri, presence: true, length: { maximum: 255 }, format: { with: URI.regexp(schemes), allow_blank: true }
+  validates :name,
+    presence: true,
+    length: { maximum: 40 },
+    uniqueness: { case_sensitive: false, allow_blank: true }
+  validates :uri,
+    presence: true,
+    length: { maximum: 255 },
+    format: { with: URI.regexp(schemes), allow_blank: true }
   validate  :ensure_connectable
 
   # ---> CALLBACKS

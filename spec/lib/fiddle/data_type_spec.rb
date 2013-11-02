@@ -18,6 +18,7 @@ describe Fiddle::DataType do
     subject { described_class.registry }
     it { should have(5).items }
     it { should be_a(Hash) }
+    its(:keys) { should =~ ["date", "datetime", "integer", "numeric", "string"] }
   end
 
   describe "Abstract" do

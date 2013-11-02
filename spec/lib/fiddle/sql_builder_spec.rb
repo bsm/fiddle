@@ -10,23 +10,23 @@ describe Fiddle::SQLBuilder do
   # Full example
   subject do
     build \
-      :measures   => fiddle_projections(:page_views),
-      :dimensions => fiddle_projections(:website_id, :date),
-      :operations => [fiddle_constraints(:website__eq).operation('my'), fiddle_constraints(:page_views__gt).operation(1000)],
-      :orders     => [Fiddle::SortOrder.new(fiddle_projections(:page_views), "DESC")]
+      measures:   fiddle_projections(:page_views),
+      dimensions: fiddle_projections(:website_id, :date),
+      operations: [fiddle_constraints(:website__eq).operation('my'), fiddle_constraints(:page_views__gt).operation(1000)],
+      orders:     [Fiddle::SortOrder.new(fiddle_projections(:page_views), "DESC")]
   end
 
   let :total_page_views do
-    build :measures => fiddle_projections(:page_views)
+    build measures: fiddle_projections(:page_views)
   end
 
   let :page_views_by_site do
-    build :measures => fiddle_projections(:page_views), :dimensions => fiddle_projections(:website_id, :website_name)
+    build measures: fiddle_projections(:page_views), dimensions: fiddle_projections(:website_id, :website_name)
   end
 
 
   let :total_page_views do
-    build :measures => fiddle_projections(:page_views)
+    build measures: fiddle_projections(:page_views)
   end
 
   it "should have a cube" do

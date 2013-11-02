@@ -1,3 +1,5 @@
+require File.expand_path("../lib/fiddle/version", __FILE__)
+
 # -*- encoding: utf-8 -*-
 Gem::Specification.new do |s|
   s.platform = Gem::Platform::RUBY
@@ -7,7 +9,7 @@ Gem::Specification.new do |s|
   s.name        = "fiddle"
   s.summary     = "Fiddle"
   s.description = "Rails Engine for constructing universes"
-  s.version     = "0.5.0"
+  s.version     = Fiddle::VERSION.dup
 
   s.authors     = ["Dimitrij Denissenko"]
   s.email       = "dimitrij@blacksquaremedia.com"
