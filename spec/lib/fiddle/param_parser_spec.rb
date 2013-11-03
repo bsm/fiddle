@@ -22,18 +22,18 @@ describe Fiddle::ParamParser do
   end
 
   it "should should parse measures" do
-    subject.measures.should =~ fiddle_projections(:page_views, :visits, :ppv)
+    subject.measures.map(&:id).should =~ fiddle_projections(:page_views, :visits, :ppv).map(&:id)
     build(select: "page_views").measures.should =~ [fiddle_projections(:page_views)]
     build(select: ["page_views", "ppv", "invalid"]).measures.should =~ fiddle_projections(:page_views, :ppv)
     build(select: "page_views|ppv|invalid").measures.should =~ fiddle_projections(:page_views, :ppv)
     build(select: ["page_views|ppv|invalid"]).measures.should =~ fiddle_projections(:page_views, :ppv)
     build(select: ["page_views|invalid", "ppv"]).measures.should =~ fiddle_projections(:page_views, :ppv)
     build(select: "page_views|page_views").measures.should =~ [fiddle_projections(:page_views)]
-    build(select: "invalid_a|invalid_b").measures.should =~ subject.measures
+    build(select: "invalid_a|invalid_b").measures.map(&:id).should =~ subject.measures.map(&:id)
   end
 
   it "should NOT allow measures to be empty" do
-    build(by: "website_id").measures.should =~ fiddle_projections(:page_views, :visits, :ppv)
+    build(by: "website_id").measures.map(&:id).should =~ fiddle_projections(:page_views, :visits, :ppv).map(&:id)
   end
 
   it "should should parse dimensions" do
