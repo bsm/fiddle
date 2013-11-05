@@ -30,15 +30,13 @@ setup data cubes with dimensions, measures, contraints & lookups.
 Once in place, users can be given access to these cubes in controllers. Example:
   
     # reports_controller.rb
-    before_filter
-
     def show
       @cube  = Fiddle::Cube.find_by_name!(params[:id])
       parser = Fiddle::ParamParser.new(@cube, params)
       render json: Fiddle::SQLBuilder.new(@cube, parser.to_hash).dataset
     end
 
-== LICENSE
+## Licence
 
     Copyright (c) 2008-2013 Black Square Media
 
