@@ -14,6 +14,7 @@ Gem::Specification.new do |s|
   s.authors     = ["Dimitrij Denissenko"]
   s.email       = "dimitrij@blacksquaremedia.com"
   s.homepage    = "https://github.com/bsm/fiddle"
+  s.license     = ['MIT']
 
   s.files       = Dir["{app,lib,config}/**/*"]
   s.test_files  = Dir["{spec}/**/*", "Rakefile", "Gemfile*"]
