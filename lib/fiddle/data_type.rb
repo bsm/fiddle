@@ -76,7 +76,7 @@ module Fiddle::DataType
     # @return [Time]
     def convert
       if numeric?
-        to_i.from_now.utc
+        to_i.seconds.from_now.utc
       else
         to_time(:utc) rescue nil
       end
