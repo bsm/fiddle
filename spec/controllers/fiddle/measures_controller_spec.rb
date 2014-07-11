@@ -16,7 +16,7 @@ describe Fiddle::MeasuresController do
       get :index, cube_id: cube.to_param, use_route: :fiddle
     end
 
-    it { assigns[:measures].should == [measure] }
+    it { expect(assigns(:measures)).to eq([measure]) }
     it { should respond_with(:success) }
     it { should render_template(:index) }
   end
@@ -26,7 +26,7 @@ describe Fiddle::MeasuresController do
       get :show, id: measure.to_param, use_route: :fiddle
     end
 
-    it { assigns[:measure].should == measure }
+    it { expect(assigns(:measure)).to eq(measure) }
     it { should respond_with(:success) }
     it { should render_template(:show) }
   end
@@ -36,7 +36,7 @@ describe Fiddle::MeasuresController do
       get :new, cube_id: cube.to_param, use_route: :fiddle
     end
 
-    it { assigns[:measure].should be_present }
+    it { expect(assigns(:measure)).to be_present }
     it { should respond_with(:success) }
     it { should render_template(:new) }
   end
@@ -52,7 +52,7 @@ describe Fiddle::MeasuresController do
       Fiddle::Measure.order(:id).last
     end
 
-    it { assigns[:measure].should == last_added }
+    it { expect(assigns(:measure)).to eq(last_added) }
     it { should redirect_to("/my/measures/#{last_added.to_param}") }
     it { should permit_params(:name, :description, :clause, :sortable, :type_code).for(:measure) } if Fiddle.strong_parameters?
   end
@@ -62,7 +62,7 @@ describe Fiddle::MeasuresController do
       get :edit, id: measure.to_param, use_route: :fiddle
     end
 
-    it { assigns[:measure].should == measure }
+    it { expect(assigns(:measure)).to eq(measure) }
     it { should respond_with(:success) }
     it { should render_template(:edit) }
   end
@@ -73,7 +73,7 @@ describe Fiddle::MeasuresController do
         measure: measure.attributes.slice('name', 'description', 'clause', 'sortable', 'type_code')
     end
 
-    it { assigns[:measure].should == measure }
+    it { expect(assigns(:measure)).to eq(measure) }
     it { should redirect_to("/my/measures/#{measure.to_param}") }
     it { should permit_params(:name, :description, :clause, :sortable, :type_code).for(:measure) } if Fiddle.strong_parameters?
   end
@@ -83,7 +83,7 @@ describe Fiddle::MeasuresController do
       delete :destroy, id: measure.to_param, use_route: :fiddle
     end
 
-    it { assigns[:measure].should == measure }
+    it { expect(assigns(:measure)).to eq(measure) }
     it { should redirect_to("/my/cubes/#{cube.to_param}/measures") }
   end
 

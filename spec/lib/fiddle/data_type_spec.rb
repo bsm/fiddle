@@ -18,87 +18,87 @@ describe Fiddle::DataType do
     subject { described_class.registry }
     it { should have(5).items }
     it { should be_a(Hash) }
-    its(:keys) { should =~ ["date", "datetime", "integer", "numeric", "string"] }
+    it { expect(subject.keys).to match_array(["date", "datetime", "integer", "numeric", "string"]) }
   end
 
   describe "Abstract" do
-    metadata[:example_group][:described_class] = described_class::Abstract
+    metadata[:described_class] = described_class::Abstract
 
     it 'should have a code' do
-      Fiddle::DataType::Numeric.code.should == "numeric"
+      expect(Fiddle::DataType::Numeric.code).to eq("numeric")
     end
 
   end
 
   describe "String" do
-    metadata[:example_group][:described_class] = described_class::String
+    metadata[:described_class] = described_class::String
 
     it 'should declare valid operations' do
-      described_class.operations.should =~ ["eq", "not_eq", "in", "not_in"]
+      expect(described_class.operations).to match_array(["eq", "not_eq", "in", "not_in"])
     end
 
     it 'should convert correctly' do
-      convert("string").should == "string"
-      convert(" ").should be_nil
+      expect(convert("string")).to eq("string")
+      expect(convert(" ")).to be_nil
     end
 
   end
 
   describe "Numeric" do
-    metadata[:example_group][:described_class] = described_class::Numeric
+    metadata[:described_class] = described_class::Numeric
 
     it 'should declare valid operations' do
-      described_class.operations.should =~ ["eq", "not_eq", "in", "not_in", "gt", "lt", "gteq", "lteq", "between"]
+      expect(described_class.operations).to match_array(["eq", "not_eq", "in", "not_in", "gt", "lt", "gteq", "lteq", "between"])
     end
 
     it 'should convert correctly' do
-      convert("4.35").should == 4.35
-      convert("--").should be_nil
+      expect(convert("4.35")).to eq(4.35)
+      expect(convert("--")).to be_nil
     end
 
   end
 
   describe "Integer" do
-    metadata[:example_group][:described_class] = described_class::Integer
+    metadata[:described_class] = described_class::Integer
 
     it { should be_a(Fiddle::DataType::Numeric) }
 
     it 'should convert correctly' do
-      convert("4.35").should == 4
-      convert("--").should be_nil
+      expect(convert("4.35")).to eq(4)
+      expect(convert("--")).to be_nil
     end
 
   end
 
   describe "Datetime" do
-    metadata[:example_group][:described_class] = described_class::Datetime
+    metadata[:described_class] = described_class::Datetime
 
     it 'should declare valid operations' do
-      described_class.operations.should =~ ["gt", "lt", "gteq", "lteq", "between"]
+      expect(described_class.operations).to match_array(["gt", "lt", "gteq", "lteq", "between"])
     end
 
     it 'should convert correctly' do
-      convert("2009-09-09 09:09:09").should == Time.utc(2009, 9, 9, 9, 9, 9)
-      convert("--").should be_nil
-      convert("-3630").should < 60.minutes.ago
-      convert("-3630").should > 61.minutes.ago
+      expect(convert("2009-09-09 09:09:09")).to eq(Time.utc(2009, 9, 9, 9, 9, 9))
+      expect(convert("--")).to be_nil
+      expect(convert("-3630")).to be < 60.minutes.ago
+      expect(convert("-3630")).to be > 61.minutes.ago
     end
 
   end
 
   describe "Date" do
-    metadata[:example_group][:described_class] = described_class::Date
+    metadata[:described_class] = described_class::Date
 
     it 'should declare valid operations' do
-      described_class.operations.should =~ ["eq", "not_eq", "gt", "lt", "gteq", "lteq", "between"]
+      expect(described_class.operations).to match_array(["eq", "not_eq", "gt", "lt", "gteq", "lteq", "between"])
     end
 
     it 'should convert correctly' do
-      convert("2009-09-09 09:09:09").should == Date.civil(2009, 9, 9)
-      convert("2009-09-09").should == Date.civil(2009, 9, 9)
-      convert("--").should be_nil
-      convert("-5").should == 5.days.ago.to_date
-      convert("+2").should == 2.days.from_now.to_date
+      expect(convert("2009-09-09 09:09:09")).to eq(Date.civil(2009, 9, 9))
+      expect(convert("2009-09-09")).to eq(Date.civil(2009, 9, 9))
+      expect(convert("--")).to be_nil
+      expect(convert("-5")).to eq(5.days.ago.to_date)
+      expect(convert("+2")).to eq(2.days.from_now.to_date)
     end
 
   end

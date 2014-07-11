@@ -16,7 +16,7 @@ describe Fiddle::ConstraintsController do
       get :index, cube_id: cube.to_param, use_route: :fiddle
     end
 
-    it { assigns[:constraints].should == [constraint] }
+    it { expect(assigns(:constraints)).to eq([constraint]) }
     it { should respond_with(:success) }
     it { should render_template(:index) }
   end
@@ -26,7 +26,7 @@ describe Fiddle::ConstraintsController do
       get :show, id: constraint.to_param, use_route: :fiddle
     end
 
-    it { assigns[:constraint].should == constraint }
+    it { expect(assigns(:constraint)).to eq(constraint) }
     it { should respond_with(:success) }
     it { should render_template(:show) }
   end
@@ -36,7 +36,7 @@ describe Fiddle::ConstraintsController do
       get :new, cube_id: cube.to_param, use_route: :fiddle
     end
 
-    it { assigns[:constraint].should be_present }
+    it { expect(assigns(:constraint)).to be_present }
     it { should respond_with(:success) }
     it { should render_template(:new) }
   end
@@ -51,7 +51,7 @@ describe Fiddle::ConstraintsController do
       Fiddle::Constraint.order(:id).last
     end
 
-    it { assigns[:constraint].should == last_added }
+    it { expect(assigns(:constraint)).to eq(last_added) }
     it { should redirect_to("/my/constraints/#{last_added.to_param}") }
     it { should permit_params(:name, :projection_id, :operation_code).for(:constraint) } if Fiddle.strong_parameters?
   end
@@ -61,7 +61,7 @@ describe Fiddle::ConstraintsController do
       get :edit, id: constraint.to_param, use_route: :fiddle
     end
 
-    it { assigns[:constraint].should == constraint }
+    it { expect(assigns(:constraint)).to eq(constraint) }
     it { should respond_with(:success) }
     it { should render_template(:edit) }
   end
@@ -72,7 +72,7 @@ describe Fiddle::ConstraintsController do
         constraint: constraint.attributes.slice('name', 'projection_id', 'operation_code')
     end
 
-    it { assigns[:constraint].should == constraint }
+    it { expect(assigns(:constraint)).to eq(constraint) }
     it { should redirect_to("/my/constraints/#{constraint.to_param}") }
     it { should permit_params(:name, :projection_id, :operation_code).for(:constraint) } if Fiddle.strong_parameters?
   end
@@ -82,7 +82,7 @@ describe Fiddle::ConstraintsController do
       delete :destroy, id: constraint.to_param, use_route: :fiddle
     end
 
-    it { assigns[:constraint].should == constraint }
+    it { expect(assigns(:constraint)).to eq(constraint) }
     it { should redirect_to("/my/cubes/#{cube.to_param}/constraints") }
   end
 

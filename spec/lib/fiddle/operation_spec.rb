@@ -24,7 +24,7 @@ describe Fiddle::Operation do
   end
 
   describe "Abstract" do
-    metadata[:example_group][:described_class] = described_class::Abstract
+    metadata[:described_class] = described_class::Abstract
 
     def build(code, *args)
       Fiddle::Operation::Eq.new constraint(code), *args
@@ -85,7 +85,7 @@ describe Fiddle::Operation do
   end
 
   describe "Eq" do
-    metadata[:example_group][:described_class] = described_class::Eq
+    metadata[:described_class] = described_class::Eq
 
     it 'should have an SQL clause' do
       subject.sql_clause.should == "= ?"
@@ -93,7 +93,7 @@ describe Fiddle::Operation do
   end
 
   describe "NotEq" do
-    metadata[:example_group][:described_class] = described_class::NotEq
+    metadata[:described_class] = described_class::NotEq
 
     it 'should have an SQL clause' do
       subject.sql_clause.should == "!= ?"
@@ -101,7 +101,7 @@ describe Fiddle::Operation do
   end
 
   describe "Between" do
-    metadata[:example_group][:described_class] = described_class::Between
+    metadata[:described_class] = described_class::Between
 
     it 'should build SQL args' do
       build("integer", "123..456").sql_args.should == [123, 456]
@@ -136,7 +136,7 @@ describe Fiddle::Operation do
   end
 
   describe "Gt" do
-    metadata[:example_group][:described_class] = described_class::Gt
+    metadata[:described_class] = described_class::Gt
 
     it 'should have an SQL clause' do
       subject.sql_clause.should == "> ?"
@@ -144,7 +144,7 @@ describe Fiddle::Operation do
   end
 
   describe "Gte" do
-    metadata[:example_group][:described_class] = described_class::Gteq
+    metadata[:described_class] = described_class::Gteq
 
     it 'should have an SQL clause' do
       subject.sql_clause.should == ">= ?"
@@ -152,7 +152,7 @@ describe Fiddle::Operation do
   end
 
   describe "Lt" do
-    metadata[:example_group][:described_class] = described_class::Lt
+    metadata[:described_class] = described_class::Lt
 
     it 'should have an SQL clause' do
       subject.sql_clause.should == "< ?"
@@ -160,7 +160,7 @@ describe Fiddle::Operation do
   end
 
   describe "Lte" do
-    metadata[:example_group][:described_class] = described_class::Lteq
+    metadata[:described_class] = described_class::Lteq
 
     it 'should have an SQL clause' do
       subject.sql_clause.should == "<= ?"
@@ -168,7 +168,7 @@ describe Fiddle::Operation do
   end
 
   describe "In" do
-    metadata[:example_group][:described_class] = described_class::In
+    metadata[:described_class] = described_class::In
 
     it { should be_a(Fiddle::Operation::Collective) }
 
@@ -178,7 +178,7 @@ describe Fiddle::Operation do
   end
 
   describe "NotIn" do
-    metadata[:example_group][:described_class] = described_class::NotIn
+    metadata[:described_class] = described_class::NotIn
 
     it { should be_a(Fiddle::Operation::Collective) }
 
@@ -188,7 +188,7 @@ describe Fiddle::Operation do
   end
 
   describe "Collective" do
-    metadata[:example_group][:described_class] = described_class::In
+    metadata[:described_class] = described_class::In
 
     it { should be_a(Fiddle::Operation::Collective) }
 

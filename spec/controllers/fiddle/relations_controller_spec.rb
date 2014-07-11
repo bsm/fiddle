@@ -16,7 +16,7 @@ describe Fiddle::RelationsController do
       get :index, cube_id: cube.to_param, use_route: :fiddle
     end
 
-    it { assigns[:relations].should == [relation] }
+    it { expect(assigns(:relations)).to eq([relation]) }
     it { should respond_with(:success) }
     it { should render_template(:index) }
   end
@@ -26,7 +26,7 @@ describe Fiddle::RelationsController do
       get :show, id: relation.to_param, use_route: :fiddle
     end
 
-    it { assigns[:relation].should == relation }
+    it { expect(assigns(:relation)).to eq(relation) }
     it { should respond_with(:success) }
     it { should render_template(:show) }
   end
@@ -36,7 +36,7 @@ describe Fiddle::RelationsController do
       get :new, cube_id: cube.to_param, use_route: :fiddle
     end
 
-    it { assigns[:relation].should be_present }
+    it { expect(assigns(:relation)).to be_present }
     it { should respond_with(:success) }
     it { should render_template(:new) }
   end
@@ -51,7 +51,7 @@ describe Fiddle::RelationsController do
       Fiddle::Relation.order(:id).last
     end
 
-    it { assigns[:relation].should == last_added }
+    it { expect(assigns(:relation)).to eq(last_added) }
     it { should redirect_to("/my/relations/#{last_added.to_param}") }
     it { should permit_params(:name, :target, :predicate, :operator).for(:relation) } if Fiddle.strong_parameters?
   end
@@ -61,7 +61,7 @@ describe Fiddle::RelationsController do
       get :edit, id: relation.to_param, use_route: :fiddle
     end
 
-    it { assigns[:relation].should == relation }
+    it { expect(assigns(:relation)).to eq(relation) }
     it { should respond_with(:success) }
     it { should render_template(:edit) }
   end
@@ -72,7 +72,7 @@ describe Fiddle::RelationsController do
         relation: relation.attributes.slice('name', 'target', 'predicate', 'operator')
     end
 
-    it { assigns[:relation].should == relation }
+    it { expect(assigns(:relation)).to eq(relation) }
     it { should redirect_to("/my/relations/#{relation.to_param}") }
     it { should permit_params(:name, :target, :predicate, :operator).for(:relation) } if Fiddle.strong_parameters?
   end
@@ -82,7 +82,7 @@ describe Fiddle::RelationsController do
       delete :destroy, id: relation.to_param, use_route: :fiddle
     end
 
-    it { assigns[:relation].should == relation }
+    it { expect(assigns(:relation)).to eq(relation) }
     it { should redirect_to("/my/cubes/#{cube.to_param}/relations") }
   end
 

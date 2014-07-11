@@ -16,7 +16,7 @@ describe Fiddle::LookupsController do
       get :index, universe_id: universe.to_param, use_route: :fiddle
     end
 
-    it { assigns[:lookups].should == [lookup] }
+    it { expect(assigns(:lookups)).to eq([lookup]) }
     it { should respond_with(:success) }
     it { should render_template(:index) }
   end
@@ -26,7 +26,7 @@ describe Fiddle::LookupsController do
       get :show, id: lookup.to_param, use_route: :fiddle
     end
 
-    it { assigns[:lookup].should == lookup }
+    it { expect(assigns(:lookup)).to eq(lookup) }
     it { should respond_with(:success) }
     it { should render_template(:show) }
   end
@@ -36,7 +36,7 @@ describe Fiddle::LookupsController do
       get :new, universe_id: universe.to_param, use_route: :fiddle
     end
 
-    it { assigns[:lookup].should be_present }
+    it { expect(assigns(:lookup)).to be_present }
     it { should respond_with(:success) }
     it { should render_template(:new) }
   end
@@ -52,7 +52,7 @@ describe Fiddle::LookupsController do
       Fiddle::Lookup.order(:id).last
     end
 
-    it { assigns[:lookup].should == last_added }
+    it { expect(assigns(:lookup)).to eq(last_added) }
     it { should redirect_to("/my/lookups/#{last_added.to_param}") }
     it { should permit_params(:name, :clause, :label_clause, :value_clause, :parent_value_clause).for(:lookup) } if Fiddle.strong_parameters?
   end
@@ -62,7 +62,7 @@ describe Fiddle::LookupsController do
       get :edit, id: lookup.to_param, use_route: :fiddle
     end
 
-    it { assigns[:lookup].should == lookup }
+    it { expect(assigns(:lookup)).to eq(lookup) }
     it { should respond_with(:success) }
     it { should render_template(:edit) }
   end
@@ -73,7 +73,7 @@ describe Fiddle::LookupsController do
         lookup: lookup.attributes.slice('name', 'clause', 'label_clause', 'value_clause', 'parent_value_clause')
     end
 
-    it { assigns[:lookup].should == lookup }
+    it { expect(assigns(:lookup)).to eq(lookup) }
     it { should redirect_to("/my/lookups/#{lookup.to_param}") }
     it { should permit_params(:name, :clause, :label_clause, :value_clause, :parent_value_clause).for(:lookup) } if Fiddle.strong_parameters?
   end
@@ -83,7 +83,7 @@ describe Fiddle::LookupsController do
       delete :destroy, id: lookup.to_param, use_route: :fiddle
     end
 
-    it { assigns[:lookup].should == lookup }
+    it { expect(assigns(:lookup)).to eq(lookup) }
     it { should redirect_to("/my/universes/#{universe.to_param}/lookups") }
   end
 

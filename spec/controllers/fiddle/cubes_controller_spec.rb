@@ -16,7 +16,7 @@ describe Fiddle::CubesController do
       get :index, universe_id: universe.to_param, use_route: :fiddle
     end
 
-    it { assigns[:cubes].should == [cube] }
+    it { expect(assigns(:cubes)).to eq([cube]) }
     it { should respond_with(:success) }
     it { should render_template(:index) }
   end
@@ -26,7 +26,7 @@ describe Fiddle::CubesController do
       get :show, id: cube.to_param, use_route: :fiddle
     end
 
-    it { assigns[:cube].should == cube }
+    it { expect(assigns(:cube)).to eq(cube) }
     it { should respond_with(:success) }
     it { should render_template(:show) }
   end
@@ -36,7 +36,7 @@ describe Fiddle::CubesController do
       get :new, universe_id: universe.to_param, use_route: :fiddle
     end
 
-    it { assigns[:cube].should be_present }
+    it { expect(assigns(:cube)).to be_present }
     it { should respond_with(:success) }
     it { should render_template(:new) }
   end
@@ -50,7 +50,8 @@ describe Fiddle::CubesController do
       Fiddle::Cube.order(:id).last
     end
 
-    it { assigns[:cube].should == last_added }
+
+    it { expect(assigns(:cube)).to eq(last_added) }
     it { should redirect_to("/my/cubes/#{last_added.to_param}") }
     it { should permit_params(:name, :clause).for(:cube) } if Fiddle.strong_parameters?
   end
@@ -60,7 +61,7 @@ describe Fiddle::CubesController do
       get :edit, id: cube.to_param, use_route: :fiddle
     end
 
-    it { assigns[:cube].should == cube }
+    it { expect(assigns(:cube)).to eq(cube) }
     it { should respond_with(:success) }
     it { should render_template(:edit) }
   end
@@ -71,7 +72,7 @@ describe Fiddle::CubesController do
         cube: cube.attributes.slice('name', 'clause')
     end
 
-    it { assigns[:cube].should == cube }
+    it { expect(assigns(:cube)).to eq(cube) }
     it { should redirect_to("/my/cubes/#{cube.to_param}") }
     it { should permit_params(:name, :clause).for(:cube) } if Fiddle.strong_parameters?
   end
@@ -81,7 +82,7 @@ describe Fiddle::CubesController do
       delete :destroy, id: cube.to_param, use_route: :fiddle
     end
 
-    it { assigns[:cube].should == cube }
+    it { expect(assigns(:cube)).to eq(cube) }
     it { should redirect_to("/my/universes/#{universe.to_param}/cubes") }
   end
 

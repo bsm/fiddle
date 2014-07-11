@@ -16,7 +16,7 @@ describe Fiddle::DimensionsController do
       get :index, cube_id: cube.to_param, use_route: :fiddle
     end
 
-    it { assigns[:dimensions].should == [dimension] }
+    it { expect(assigns(:dimensions)).to eq([dimension]) }
     it { should respond_with(:success) }
     it { should render_template(:index) }
   end
@@ -26,7 +26,7 @@ describe Fiddle::DimensionsController do
       get :show, id: dimension.to_param, use_route: :fiddle
     end
 
-    it { assigns[:dimension].should == dimension }
+    it { expect(assigns(:dimension)).to eq(dimension) }
     it { should respond_with(:success) }
     it { should render_template(:show) }
   end
@@ -36,7 +36,7 @@ describe Fiddle::DimensionsController do
       get :new, cube_id: cube.to_param, use_route: :fiddle
     end
 
-    it { assigns[:dimension].should be_present }
+    it { expect(assigns(:dimension)).to be_present }
     it { should respond_with(:success) }
     it { should render_template(:new) }
   end
@@ -52,7 +52,7 @@ describe Fiddle::DimensionsController do
       Fiddle::Dimension.order(:id).last
     end
 
-    it { assigns[:dimension].should == last_added }
+    it { expect(assigns(:dimension)).to eq(last_added) }
     it { should redirect_to("/my/dimensions/#{last_added.to_param}") }
     it { should permit_params(:name, :description, :clause, :sortable, :type_code, :visible).for(:dimension) } if Fiddle.strong_parameters?
   end
@@ -62,7 +62,7 @@ describe Fiddle::DimensionsController do
       get :edit, id: dimension.to_param, use_route: :fiddle
     end
 
-    it { assigns[:dimension].should == dimension }
+    it { expect(assigns(:dimension)).to eq(dimension) }
     it { should respond_with(:success) }
     it { should render_template(:edit) }
   end
@@ -73,7 +73,7 @@ describe Fiddle::DimensionsController do
         dimension: dimension.attributes.slice('name', 'description', 'clause', 'sortable', 'type_code', 'visible')
     end
 
-    it { assigns[:dimension].should == dimension }
+    it { expect(assigns(:dimension)).to eq(dimension) }
     it { should redirect_to("/my/dimensions/#{dimension.to_param}") }
     it { should permit_params(:name, :description, :clause, :sortable, :type_code, :visible).for(:dimension) } if Fiddle.strong_parameters?
   end
@@ -83,7 +83,7 @@ describe Fiddle::DimensionsController do
       delete :destroy, id: dimension.to_param, use_route: :fiddle
     end
 
-    it { assigns[:dimension].should == dimension }
+    it { expect(assigns(:dimension)).to eq(dimension) }
     it { should redirect_to("/my/cubes/#{cube.to_param}/dimensions") }
   end
 

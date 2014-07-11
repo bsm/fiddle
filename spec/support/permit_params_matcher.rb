@@ -29,11 +29,11 @@ module Shoulda # :nodoc:
           match_nested?(@expected, @permitted, [@scope])
         end
 
-        def failure_message_for_should
+        def failure_message
           "Expected #{@last_expectation}; permitted were: #{@permitted.inspect}"
         end
 
-        def failure_message_for_should_not
+        def failure_message_when_negated
           "Did not expect #{@last_expectation}; permitted were: #{@permitted.inspect}"
         end
 
