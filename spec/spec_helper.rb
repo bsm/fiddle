@@ -28,6 +28,10 @@ RSpec.configure do |config|
     end
   end
 
+  config.expect_with :rspec do |c|
+    c.syntax = [:expect, :should]
+  end
+
   config.before :all do
     self.class.set_fixture_class \
       fiddle_universes: Fiddle::Universe,
