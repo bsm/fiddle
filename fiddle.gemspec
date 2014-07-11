@@ -29,6 +29,8 @@ Gem::Specification.new do |s|
   s.add_development_dependency "rspec"
   s.add_development_dependency "rspec-rails"
   s.add_development_dependency "shoulda-matchers"
+  s.add_development_dependency "rspec-its"
+  s.add_development_dependency "rspec-collection_matchers"
   s.add_development_dependency "sqlite3"
   s.add_development_dependency "pg"
   s.add_development_dependency "factory_girl"

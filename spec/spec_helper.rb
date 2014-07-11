@@ -8,6 +8,8 @@ require File.expand_path("../scenario/config/environment.rb", __FILE__)
 require 'rspec/rails'
 require 'shoulda/matchers'
 require 'factory_girl'
+require 'rspec/its'
+require 'rspec/collection_matchers'
 
 Dir[Rails.root.join("../../spec/support/**/*.rb")].each {|f| require f }
 
@@ -17,6 +19,7 @@ RSpec.configure do |config|
   config.use_transactional_fixtures = true
   config.include FactoryGirl::Syntax::Methods
   config.render_views
+  config.infer_spec_type_from_file_location!
 
   config.before :suite do
     load File.expand_path('../factories.rb', __FILE__)
