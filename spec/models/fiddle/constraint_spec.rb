@@ -10,7 +10,7 @@ describe Fiddle::Constraint do
   it { should validate_presence_of(:projection) }
   it { should validate_presence_of(:projection_id) }
   it { should validate_presence_of(:name) }
-  it { should ensure_length_of(:name).is_at_most(30) }
+  it { should validate_length_of(:name).is_at_most(30) }
   it { should validate_uniqueness_of(:name).case_insensitive.scoped_to([:cube_id, :operation_code]) }
   ["example", "an_example", "_example"].each do |value|
     it { should allow_value(value).for(:name) }

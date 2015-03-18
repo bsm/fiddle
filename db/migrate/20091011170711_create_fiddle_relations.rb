@@ -6,7 +6,7 @@ class CreateFiddleRelations < ActiveRecord::Migration
       t.text    :target
       t.text    :predicate
       t.integer :cube_id
-      t.timestamps
+      t.timestamps null: true
     end
     add_index :fiddle_relations, :cube_id
     add_index :fiddle_relations, :name

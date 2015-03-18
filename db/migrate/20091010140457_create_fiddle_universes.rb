@@ -3,7 +3,7 @@ class CreateFiddleUniverses < ActiveRecord::Migration
     create_table :fiddle_universes do |t|
       t.string :name
       t.string :uri
-      t.timestamps
+      t.timestamps null: true
     end
   end
 end

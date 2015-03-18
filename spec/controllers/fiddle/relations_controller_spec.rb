@@ -2,6 +2,10 @@ require 'spec_helper'
 
 describe Fiddle::RelationsController do
 
+  before do
+    @routes = Fiddle::Engine.routes
+  end
+
   let :relation do
     create :relation
   end
@@ -13,7 +17,7 @@ describe Fiddle::RelationsController do
   describe "GET index" do
     before do
       relation # create one
-      get :index, cube_id: cube.to_param, use_route: :fiddle
+      get :index, cube_id: cube.to_param
     end
 
     it { expect(assigns(:relations)).to eq([relation]) }
@@ -23,7 +27,7 @@ describe Fiddle::RelationsController do
 
   describe "GET show" do
     before do
-      get :show, id: relation.to_param, use_route: :fiddle
+      get :show, id: relation.to_param
     end
 
     it { expect(assigns(:relation)).to eq(relation) }
@@ -33,7 +37,7 @@ describe Fiddle::RelationsController do
 
   describe "GET new" do
     before do
-      get :new, cube_id: cube.to_param, use_route: :fiddle
+      get :new, cube_id: cube.to_param
     end
 
     it { expect(assigns(:relation)).to be_present }
@@ -44,7 +48,7 @@ describe Fiddle::RelationsController do
   describe "POST create" do
     before do
       attrs = attributes_for :relation, cube: nil, predicate: "#{cube.name}.foreign_id = any.id"
-      post :create, cube_id: cube.to_param, relation: attrs, use_route: :fiddle
+      post :create, cube_id: cube.to_param, relation: attrs
     end
 
     let :last_added do
@@ -58,7 +62,7 @@ describe Fiddle::RelationsController do
 
   describe "GET edit" do
     before do
-      get :edit, id: relation.to_param, use_route: :fiddle
+      get :edit, id: relation.to_param
     end
 
     it { expect(assigns(:relation)).to eq(relation) }
@@ -68,7 +72,7 @@ describe Fiddle::RelationsController do
 
   describe "PUT update" do
     before do
-      put :update, id: relation.to_param, use_route: :fiddle,
+      put :update, id: relation.to_param,
         relation: relation.attributes.slice('name', 'target', 'predicate', 'operator')
     end
 
@@ -79,7 +83,7 @@ describe Fiddle::RelationsController do
 
   describe "DELETE destroy" do
     before do
-      delete :destroy, id: relation.to_param, use_route: :fiddle
+      delete :destroy, id: relation.to_param
     end
 
     it { expect(assigns(:relation)).to eq(relation) }

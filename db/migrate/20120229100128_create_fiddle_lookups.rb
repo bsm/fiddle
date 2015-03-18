@@ -6,7 +6,7 @@ class CreateFiddleLookups < ActiveRecord::Migration
       t.text    :clause
       t.string  :label_clause, :limit => 255
       t.string  :value_clause, :limit => 255
-      t.timestamps
+      t.timestamps null: true
     end
     add_index :fiddle_lookups, :universe_id
   end

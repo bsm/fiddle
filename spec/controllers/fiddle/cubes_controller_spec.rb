@@ -2,6 +2,10 @@ require 'spec_helper'
 
 describe Fiddle::CubesController do
 
+  before do
+    @routes = Fiddle::Engine.routes
+  end
+
   let :cube do
     create :cube
   end
@@ -13,7 +17,7 @@ describe Fiddle::CubesController do
   describe "GET index" do
     before do
       cube # create one
-      get :index, universe_id: universe.to_param, use_route: :fiddle
+      get :index, universe_id: universe.to_param
     end
 
     it { expect(assigns(:cubes)).to eq([cube]) }
@@ -23,7 +27,7 @@ describe Fiddle::CubesController do
 
   describe "GET show" do
     before do
-      get :show, id: cube.to_param, use_route: :fiddle
+      get :show, id: cube.to_param
     end
 
     it { expect(assigns(:cube)).to eq(cube) }
@@ -33,7 +37,7 @@ describe Fiddle::CubesController do
 
   describe "GET new" do
     before do
-      get :new, universe_id: universe.to_param, use_route: :fiddle
+      get :new, universe_id: universe.to_param
     end
 
     it { expect(assigns(:cube)).to be_present }
@@ -43,7 +47,7 @@ describe Fiddle::CubesController do
 
   describe "POST create" do
     before do
-      post :create, universe_id: universe.to_param, cube: attributes_for(:cube), use_route: :fiddle
+      post :create, universe_id: universe.to_param, cube: attributes_for(:cube)
     end
 
     let :last_added do
@@ -58,7 +62,7 @@ describe Fiddle::CubesController do
 
   describe "GET edit" do
     before do
-      get :edit, id: cube.to_param, use_route: :fiddle
+      get :edit, id: cube.to_param
     end
 
     it { expect(assigns(:cube)).to eq(cube) }
@@ -68,7 +72,7 @@ describe Fiddle::CubesController do
 
   describe "PUT update" do
     before do
-      put :update, id: cube.to_param, use_route: :fiddle,
+      put :update, id: cube.to_param,
         cube: cube.attributes.slice('name', 'clause')
     end
 
@@ -79,7 +83,7 @@ describe Fiddle::CubesController do
 
   describe "DELETE destroy" do
     before do
-      delete :destroy, id: cube.to_param, use_route: :fiddle
+      delete :destroy, id: cube.to_param
     end
 
     it { expect(assigns(:cube)).to eq(cube) }

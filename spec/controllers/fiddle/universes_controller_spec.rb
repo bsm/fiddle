@@ -2,6 +2,10 @@ require 'spec_helper'
 
 describe Fiddle::UniversesController do
 
+  before do
+    @routes = Fiddle::Engine.routes
+  end
+
   let :universe do
     create :universe
   end
@@ -9,7 +13,7 @@ describe Fiddle::UniversesController do
   describe "GET index" do
     before do
       universe # create one
-      get :index, use_route: :fiddle
+      get :index
     end
 
     it { expect(assigns(:universes)).to eq([universe]) }
@@ -25,7 +29,7 @@ describe Fiddle::UniversesController do
 
   describe "GET show" do
     before do
-      get :show, id: universe.to_param, use_route: :fiddle
+      get :show, id: universe.to_param
     end
 
     it { expect(assigns(:universe)).to eq(universe) }
@@ -35,7 +39,7 @@ describe Fiddle::UniversesController do
 
   describe "GET new" do
     before do
-      get :new, use_route: :fiddle
+      get :new
     end
 
     it { expect(assigns(:universe)).to be_present }
@@ -45,7 +49,7 @@ describe Fiddle::UniversesController do
 
   describe "POST create" do
     before do
-      post :create, universe: attributes_for(:universe), use_route: :fiddle
+      post :create, universe: attributes_for(:universe)
     end
 
     let :last_added do
@@ -59,7 +63,7 @@ describe Fiddle::UniversesController do
 
   describe "GET edit" do
     before do
-      get :edit, id: universe.to_param, use_route: :fiddle
+      get :edit, id: universe.to_param
     end
 
     it { expect(assigns(:universe)).to eq(universe) }
@@ -69,7 +73,7 @@ describe Fiddle::UniversesController do
 
   describe "PUT update" do
     before do
-      put :update, id: universe.to_param, universe: universe.attributes.slice('name', 'uri'), use_route: :fiddle
+      put :update, id: universe.to_param, universe: universe.attributes.slice('name', 'uri')
     end
 
     it { expect(assigns(:universe)).to eq(universe) }
@@ -79,7 +83,7 @@ describe Fiddle::UniversesController do
 
   describe "DELETE destroy" do
     before do
-      delete :destroy, id: universe.to_param, use_route: :fiddle
+      delete :destroy, id: universe.to_param
     end
 
     it { expect(assigns(:universe)).to eq(universe) }

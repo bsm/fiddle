@@ -2,6 +2,10 @@ require 'spec_helper'
 
 describe Fiddle::ConstraintsController do
 
+  before do
+    @routes = Fiddle::Engine.routes
+  end
+
   let :constraint do
     create :constraint
   end
@@ -13,7 +17,7 @@ describe Fiddle::ConstraintsController do
   describe "GET index" do
     before do
       constraint # create one
-      get :index, cube_id: cube.to_param, use_route: :fiddle
+      get :index, cube_id: cube.to_param
     end
 
     it { expect(assigns(:constraints)).to eq([constraint]) }
@@ -23,7 +27,7 @@ describe Fiddle::ConstraintsController do
 
   describe "GET show" do
     before do
-      get :show, id: constraint.to_param, use_route: :fiddle
+      get :show, id: constraint.to_param
     end
 
     it { expect(assigns(:constraint)).to eq(constraint) }
@@ -33,7 +37,7 @@ describe Fiddle::ConstraintsController do
 
   describe "GET new" do
     before do
-      get :new, cube_id: cube.to_param, use_route: :fiddle
+      get :new, cube_id: cube.to_param
     end
 
     it { expect(assigns(:constraint)).to be_present }
@@ -44,7 +48,7 @@ describe Fiddle::ConstraintsController do
   describe "POST create" do
     before do
       attrs = build(:constraint, projection: create(:projection, cube: cube)).attributes
-      post :create, cube_id: cube.to_param, constraint: attrs, use_route: :fiddle
+      post :create, cube_id: cube.to_param, constraint: attrs
     end
 
     let :last_added do
@@ -58,7 +62,7 @@ describe Fiddle::ConstraintsController do
 
   describe "GET edit" do
     before do
-      get :edit, id: constraint.to_param, use_route: :fiddle
+      get :edit, id: constraint.to_param
     end
 
     it { expect(assigns(:constraint)).to eq(constraint) }
@@ -68,7 +72,7 @@ describe Fiddle::ConstraintsController do
 
   describe "PUT update" do
     before do
-      put :update, id: constraint.to_param, use_route: :fiddle,
+      put :update, id: constraint.to_param,
         constraint: constraint.attributes.slice('name', 'projection_id', 'operation_code')
     end
 
@@ -79,7 +83,7 @@ describe Fiddle::ConstraintsController do
 
   describe "DELETE destroy" do
     before do
-      delete :destroy, id: constraint.to_param, use_route: :fiddle
+      delete :destroy, id: constraint.to_param
     end
 
     it { expect(assigns(:constraint)).to eq(constraint) }

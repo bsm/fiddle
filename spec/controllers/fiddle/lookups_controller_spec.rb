@@ -2,6 +2,10 @@ require 'spec_helper'
 
 describe Fiddle::LookupsController do
 
+  before do
+    @routes = Fiddle::Engine.routes
+  end
+
   let :lookup do
     create :lookup
   end
@@ -13,7 +17,7 @@ describe Fiddle::LookupsController do
   describe "GET index" do
     before do
       lookup # create one
-      get :index, universe_id: universe.to_param, use_route: :fiddle
+      get :index, universe_id: universe.to_param
     end
 
     it { expect(assigns(:lookups)).to eq([lookup]) }
@@ -23,7 +27,7 @@ describe Fiddle::LookupsController do
 
   describe "GET show" do
     before do
-      get :show, id: lookup.to_param, use_route: :fiddle
+      get :show, id: lookup.to_param
     end
 
     it { expect(assigns(:lookup)).to eq(lookup) }
@@ -33,7 +37,7 @@ describe Fiddle::LookupsController do
 
   describe "GET new" do
     before do
-      get :new, universe_id: universe.to_param, use_route: :fiddle
+      get :new, universe_id: universe.to_param
     end
 
     it { expect(assigns(:lookup)).to be_present }
@@ -45,7 +49,7 @@ describe Fiddle::LookupsController do
     before do
       attrs = attributes_for :lookup, universe: nil
       attrs.merge! parent_value_clause: 'parent_value'
-      post :create, universe_id: universe.to_param, lookup: attrs, use_route: :fiddle
+      post :create, universe_id: universe.to_param, lookup: attrs
     end
 
     let :last_added do
@@ -59,7 +63,7 @@ describe Fiddle::LookupsController do
 
   describe "GET edit" do
     before do
-      get :edit, id: lookup.to_param, use_route: :fiddle
+      get :edit, id: lookup.to_param
     end
 
     it { expect(assigns(:lookup)).to eq(lookup) }
@@ -69,7 +73,7 @@ describe Fiddle::LookupsController do
 
   describe "PUT update" do
     before do
-      put :update, id: lookup.to_param, use_route: :fiddle,
+      put :update, id: lookup.to_param,
         lookup: lookup.attributes.slice('name', 'clause', 'label_clause', 'value_clause', 'parent_value_clause')
     end
 
@@ -80,7 +84,7 @@ describe Fiddle::LookupsController do
 
   describe "DELETE destroy" do
     before do
-      delete :destroy, id: lookup.to_param, use_route: :fiddle
+      delete :destroy, id: lookup.to_param
     end
 
     it { expect(assigns(:lookup)).to eq(lookup) }

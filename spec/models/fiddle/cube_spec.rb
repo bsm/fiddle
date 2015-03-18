@@ -12,7 +12,7 @@ describe Fiddle::Cube do
 
   it { should validate_presence_of(:universe) }
   it { should validate_presence_of(:name) }
-  it { should ensure_length_of(:name).is_at_most(30) }
+  it { should validate_length_of(:name).is_at_most(30) }
   it { should validate_uniqueness_of(:name).case_insensitive.scoped_to(:universe_id) }
   ["example", "an_example", "_example"].each do |value|
     it { should allow_value(value).for(:name) }
@@ -21,7 +21,7 @@ describe Fiddle::Cube do
     it { should_not allow_value(value).for(:name) }
   end
   it { should validate_presence_of(:clause) }
-  it { should ensure_length_of(:clause).is_at_most(2000) }
+  it { should validate_length_of(:clause).is_at_most(2000) }
 
   if Fiddle.protected_attributes?
     [:name, :clause].each do |attribute|

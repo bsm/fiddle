@@ -4,7 +4,7 @@ class CreateFiddleCubes < ActiveRecord::Migration
       t.string  :name, :limit => 80
       t.text    :clause
       t.integer :universe_id
-      t.timestamps
+      t.timestamps null: true
     end
     add_index :fiddle_cubes, :universe_id
   end

@@ -28,7 +28,7 @@ describe Fiddle::Lookup do
 
   # ----> VALIDATIONS
   it { should validate_presence_of(:name) }
-  it { should ensure_length_of(:name).is_at_most(30) }
+  it { should validate_length_of(:name).is_at_most(30) }
   it { should validate_uniqueness_of(:name).scoped_to(:universe_id) }
   ["example", "an_example", "_example"].each do |value|
     it { should allow_value(value).for(:name) }
@@ -38,16 +38,16 @@ describe Fiddle::Lookup do
   end
 
   it { should validate_presence_of(:clause) }
-  it { should ensure_length_of(:clause).is_at_most(2000) }
+  it { should validate_length_of(:clause).is_at_most(2000) }
 
   it { should validate_presence_of(:label_clause) }
-  it { should ensure_length_of(:label_clause).is_at_most(255) }
+  it { should validate_length_of(:label_clause).is_at_most(255) }
 
   it { should validate_presence_of(:value_clause) }
-  it { should ensure_length_of(:value_clause).is_at_most(255) }
+  it { should validate_length_of(:value_clause).is_at_most(255) }
 
   it { should_not validate_presence_of(:parent_value_clause) }
-  it { should ensure_length_of(:parent_value_clause).is_at_most(255) }
+  it { should validate_length_of(:parent_value_clause).is_at_most(255) }
 
   # ----> ATTRIBUTES
 

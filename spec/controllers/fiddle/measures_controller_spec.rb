@@ -2,6 +2,10 @@ require 'spec_helper'
 
 describe Fiddle::MeasuresController do
 
+  before do
+    @routes = Fiddle::Engine.routes
+  end
+
   let :measure do
     create :measure
   end
@@ -13,7 +17,7 @@ describe Fiddle::MeasuresController do
   describe "GET index" do
     before do
       measure # create one
-      get :index, cube_id: cube.to_param, use_route: :fiddle
+      get :index, cube_id: cube.to_param
     end
 
     it { expect(assigns(:measures)).to eq([measure]) }
@@ -23,7 +27,7 @@ describe Fiddle::MeasuresController do
 
   describe "GET show" do
     before do
-      get :show, id: measure.to_param, use_route: :fiddle
+      get :show, id: measure.to_param
     end
 
     it { expect(assigns(:measure)).to eq(measure) }
@@ -33,7 +37,7 @@ describe Fiddle::MeasuresController do
 
   describe "GET new" do
     before do
-      get :new, cube_id: cube.to_param, use_route: :fiddle
+      get :new, cube_id: cube.to_param
     end
 
     it { expect(assigns(:measure)).to be_present }
@@ -45,7 +49,7 @@ describe Fiddle::MeasuresController do
     before do
       attrs = attributes_for :measure, cube: nil, clause: "#{cube.name}.some_col"
       attrs.merge! description: 'Some Col Description', sortable: true
-      post :create, cube_id: cube.to_param, measure: attrs, use_route: :fiddle
+      post :create, cube_id: cube.to_param, measure: attrs
     end
 
     let :last_added do
@@ -59,7 +63,7 @@ describe Fiddle::MeasuresController do
 
   describe "GET edit" do
     before do
-      get :edit, id: measure.to_param, use_route: :fiddle
+      get :edit, id: measure.to_param
     end
 
     it { expect(assigns(:measure)).to eq(measure) }
@@ -69,7 +73,7 @@ describe Fiddle::MeasuresController do
 
   describe "PUT update" do
     before do
-      put :update, id: measure.to_param, use_route: :fiddle,
+      put :update, id: measure.to_param,
         measure: measure.attributes.slice('name', 'description', 'clause', 'sortable', 'type_code')
     end
 
@@ -80,7 +84,7 @@ describe Fiddle::MeasuresController do
 
   describe "DELETE destroy" do
     before do
-      delete :destroy, id: measure.to_param, use_route: :fiddle
+      delete :destroy, id: measure.to_param
     end
 
     it { expect(assigns(:measure)).to eq(measure) }

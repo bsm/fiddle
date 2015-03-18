@@ -8,7 +8,7 @@ class CreateFiddleProjections < ActiveRecord::Migration
       t.boolean :visible, :null => false, :default => true
       t.string  :type_code, :limit => 20
       t.integer :cube_id
-      t.timestamps
+      t.timestamps null: true
     end
     add_index :fiddle_projections, :type
     add_index :fiddle_projections, :cube_id

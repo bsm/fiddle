@@ -7,11 +7,11 @@ describe Fiddle::Universe do
   it { should have_many(:lookups).dependent(:destroy) }
 
   it { should validate_presence_of(:name) }
-  it { should ensure_length_of(:name).is_at_most(40) }
+  it { should validate_length_of(:name).is_at_most(40) }
   it { should validate_uniqueness_of(:name).case_insensitive }
 
   it { should validate_presence_of(:uri) }
-  it { should ensure_length_of(:uri).is_at_most(255) }
+  it { should validate_length_of(:uri).is_at_most(255) }
 
   ["sqlite::memory:"].each do |value|
     it { should allow_value(value).for(:uri) }
